@@ -4,12 +4,13 @@ using System.Text;
 using System.IO;
 using Sys = Cosmos.System;
 
-namespace CosmosKernel1
+namespace DogOS
 {
     public enum ErrorTypes
     {
         Null = -1,
-        UnknownCommand
+        UnknownCommand,
+        RequiredArgument
     }
 
     public class Kernel : Sys.Kernel
@@ -17,51 +18,27 @@ namespace CosmosKernel1
         #region globals
 
         public static string os_name = "DogOS";
-        public static string version = "0.0.1";
+        public string version = null;
         public static string filesys = @"0:\";
+        public IniFile system_ini;
         public Sys.FileSystem.CosmosVFS fs;
        
         #endregion
-
-        public void ResetConsole()
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        public void OutputError(string error, ErrorTypes error_type = ErrorTypes.Null)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            switch(error_type)
-            {
-                case ErrorTypes.UnknownCommand:
-                    Console.Write("Unknown Command");
-                    break;
-                case ErrorTypes.Null: break;
-            }
-
-            ResetConsole();
-
-            Console.Write(": " + error);
-            Console.Write("\n");
-        }
-
-        public void OutputError(Exception error)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("'" + error.GetType().Name + "' was raised. More details are below.");
-            ResetConsole();
-
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("Message: ");
-            Console.Write(error.Message + "\n");
-            ResetConsole();
-        }
 
         protected override void BeforeRun()
         {
             // Init the filesystem
             this.fs = new Sys.FileSystem.CosmosVFS();
             Sys.FileSystem.VFS.VFSManager.RegisterVFS(this.fs);
+
+            // Check if 'system.ini' exists. If not, create it.
+            if (!File.Exists(filesys + "system.ini"))
+            {
+                Console.WriteLine("'system.ini' does not exist. Creating one.");
+                Utils.WriteToFile(filesys, "system.ini", "[INFO]\nOS_VER=0.0.1\nOS_DIRECTORY=0:\\dogos");
+            }
+
+            version = IniFile.Read(filesys + "system.ini", "INFO", "OS_VER");
 
             // Clear the console
             Console.Clear();
@@ -76,11 +53,12 @@ namespace CosmosKernel1
             Console.WriteLine(borders);
 
             // Reset the console
-            ResetConsole();
+            Utils.ResetConsole();
         }
 
         protected override void Run()
         {
+            Console.Write("\n");
             Console.Write(filesys + ">");
             var input = Console.ReadLine();
 
@@ -111,25 +89,30 @@ namespace CosmosKernel1
                     break;
 
                 case "cat":
-                    try
-                    {
-                        Console.WriteLine(File.ReadAllText(filesys + input_array[1]));
-                    }
-                    catch (Exception e)
-                    {
-                        OutputError(e);
-                    }
+                    Console.WriteLine(Utils.ReadFile(filesys, input_array[1]));
                     break;
 
                 case "clear":
                     Console.Clear();
                     break;
 
-                case "test":
+                case "shutdown":
+                    Sys.Power.Shutdown();
+                    break;
+
+                case "rm":
+                    try
+                    {
+                        File.Delete(filesys + input_array[1]);
+                    }
+                    catch (Exception e)
+                    {
+                        Utils.OutputError(e);
+                    }
                     break;
 
                 default:
-                    OutputError(input_array[0], ErrorTypes.UnknownCommand);
+                    Utils.OutputError(input_array[0], ErrorTypes.UnknownCommand);
                     break;
             }
         }
