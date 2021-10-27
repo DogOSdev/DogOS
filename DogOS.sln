@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosKernel1", "CosmosKernel1\CosmosKernel1.csproj", "{4D3A616D-E971-4A70-B1BA-D2A43C1EA9D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogOS", "DogOS\DogOS.csproj", "{4D3A616D-E971-4A70-B1BA-D2A43C1EA9D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
