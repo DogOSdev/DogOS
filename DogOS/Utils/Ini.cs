@@ -5,9 +5,9 @@ using System.IO;
 using Sys = Cosmos.System;
 
 
-namespace DogOS
+namespace DogOS.Utils
 {
-    public class IniFile
+    public class Ini
     {
         // Source code to reading file is here
         // https://stackoverflow.com/a/55752753
