@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using Sys = Cosmos.System;
 using IL2CPU.API.Attribs;
+using Cosmos.HAL;
 
 namespace DogOS
 {
@@ -19,38 +20,28 @@ namespace DogOS
         #region globals
 
         public static string os_name = "DogOS";
-        public string version = null;
-        public static bool running = true;
-
-        [ManifestResourceStream(ResourceName = "DogOS.en-US.ini")]
-        public static byte[] lang_file_bytes;
-        public static string lang_file;
-        public static int lang_offset = 3;
+        public string version = "0.0.1";
+        public static bool running = false;
+        public GUI.DisplayDriver desktop;
 
         #endregion
 
         protected override void BeforeRun()
         {
-            Shell.Commands.CommandManager.RegisterCommands();
-
-            string b = "";
-            for (int i = 0; i < lang_file_bytes.Length; i++)
+            try
             {
-                if (i + lang_offset < lang_file_bytes.Length)
-                    b += (char)lang_file_bytes[i + lang_offset];
+                desktop = new GUI.DisplayDriver();
+                running = true;
             }
-            lang_file = b;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         protected override void Run()
-        {
-            while(running)
-            {
-                Console.Write("> ");
-                string input = Console.ReadLine();
-
-                Shell.Commands.CommandManager._CommandManager(input);
-            }
+        {   
+            desktop.Pixel(5, 5, System.Drawing.Color.Black, 5);
         }
     }
 }

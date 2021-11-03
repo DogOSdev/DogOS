@@ -18,14 +18,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="en-US.ini" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Include="en-US.ini" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
