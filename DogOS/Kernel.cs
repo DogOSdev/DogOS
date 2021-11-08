@@ -8,11 +8,39 @@ using Cosmos.HAL;
 
 namespace DogOS
 {
-    public enum ErrorTypes
+    public class CustomMouseEvent : Events.MouseEvent
     {
-        Null = -1,
-        UnknownCommand,
-        RequiredArgument
+        public override void OnMouseState(Sys.MouseState state)
+        {
+            switch (state)
+            {
+                case Sys.MouseState.None:
+                    Kernel.background = System.Drawing.Color.Black;
+                    break;
+                case Sys.MouseState.Left:
+                    Kernel.background = System.Drawing.Color.Red;
+                    break;
+                case Sys.MouseState.Right:
+                    Kernel.background = System.Drawing.Color.Yellow;
+                    break;
+                case Sys.MouseState.Middle:
+                    Kernel.background = System.Drawing.Color.Green;
+                    break;
+                case Sys.MouseState.FourthButton:
+                    Kernel.background = System.Drawing.Color.Blue;
+                    break;
+                case Sys.MouseState.FifthButton:
+                    Kernel.background = System.Drawing.Color.Purple;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public override void OnMouseMove(int x, int y)
+        {
+            // Sys.Global.mDebugger.Send($"Mouse Move x: {x} y: {y}");
+        }
     }
 
     public class Kernel : Sys.Kernel
@@ -23,6 +51,7 @@ namespace DogOS
         public string version = "0.0.1";
         public static bool running = false;
         public GUI.DisplayDriver desktop;
+        public static System.Drawing.Color background = System.Drawing.Color.White;
 
         #endregion
 
@@ -30,7 +59,11 @@ namespace DogOS
         {
             try
             {
-                desktop = new GUI.DisplayDriver();
+                Devices.MouseManager.ScreenWidth = 640;
+                Devices.MouseManager.ScreenHeight = 480;
+                Devices.MouseManager.AddMouseEvent(new CustomMouseEvent());
+                desktop = new GUI.BufferedDisplayDriver(640, 480);
+
                 running = true;
             }
             catch (Exception e)
@@ -40,8 +73,9 @@ namespace DogOS
         }
 
         protected override void Run()
-        {   
-            desktop.Pixel(5, 5, System.Drawing.Color.Black, 5);
+        {
+            desktop.Clear(background);
+            desktop.Draw();
         }
     }
 }
