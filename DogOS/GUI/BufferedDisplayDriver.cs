@@ -23,7 +23,7 @@ namespace DogOS.GUI
             old_buffer = new Color[width*height];
         }
 
-        public new void Draw()
+        public void DrawBuffer()
         {
             Pen pen = new Pen(Color.Black);
 
@@ -88,7 +88,7 @@ namespace DogOS.GUI
             DiagonalLine(dx, dy, x_start, y_end, c);
         }
 
-        public void Rectangle(int x_start, int y_start, int width, int height, Color c, bool filled = false)
+        public new void Rectangle(int x_start, int y_start, int width, int height, Color c, bool filled = false)
         {
             switch (filled)
             {
