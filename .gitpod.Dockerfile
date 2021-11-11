@@ -12,3 +12,6 @@ RUN sudo apt-get update
 RUN sudo apt-get install -y apt-transport-https
 RUN sudo apt-get update
 RUN sudo apt-get install -y dotnet-sdk-5.0
+
+# Install NuGet
+RUN sudo apt-get install nuget
