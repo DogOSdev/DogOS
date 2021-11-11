@@ -12,7 +12,7 @@ namespace DogOS.Devices
     public static class MouseManager // : Cosmos.System.MouseManager (Error CS0713)
     {
         private static List<Cosmos.HAL.MouseBase> mouse_list = new List<Cosmos.HAL.MouseBase>();
-        private static List<Events.MouseEvent> mouse_events = new List<Events.MouseEvent>();
+        public static List<Events.IMouseEvent> mouse_events = new List<Events.IMouseEvent>();
 
         public static uint last_x;
         public static uint last_y;
@@ -92,21 +92,17 @@ namespace DogOS.Devices
                 realy = (uint)y;
             }
 
-            last_x = realx;
-            last_y = realy;
-
             foreach (var mouse_event in mouse_events)
             {
-                if(state != last_state)
-                {
-                    mouse_event.OnMouseState(state);
-                    last_state = state;
-                }
-                mouse_event.OnMouseMove((int)realx, (int)realy);
+                mouse_event.OnMouseState((int)realx, (int)realy, last_state, state);
+                mouse_event.OnMouseMove((int)last_x, (int)last_y, (int)realx, (int)realy);
             }
+            last_state = state;
+            last_x = realx;
+            last_y = realy;
         }
 
-        public static void AddMouseEvent(Events.MouseEvent mouse_event)
+        public static void AddMouseEvent(Events.IMouseEvent mouse_event)
         {
             if(mouse_events.Contains(mouse_event))
             {
@@ -115,7 +111,7 @@ namespace DogOS.Devices
             mouse_events.Add(mouse_event);
         }
 
-        public static void RemoveMouseEvent(Events.MouseEvent mouse_event)
+        public static void RemoveMouseEvent(Events.IMouseEvent mouse_event)
         {
             if(mouse_events.Contains(mouse_event))
             {

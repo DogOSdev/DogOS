@@ -5,9 +5,9 @@ using Sys = Cosmos.System;
 
 namespace DogOS.Events
 {
-    public abstract class MouseEvent
+    public interface IMouseEvent
     {
-        public abstract void OnMouseState(Sys.MouseState state);
-        public abstract void OnMouseMove(int x, int y);
+        void OnMouseState(int x, int y, Sys.MouseState old_state, Sys.MouseState state);
+        void OnMouseMove(int old_x, int old_y, int x, int y);
     }
 }

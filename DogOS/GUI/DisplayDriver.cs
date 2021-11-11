@@ -37,8 +37,6 @@ namespace DogOS.GUI
 
         #region Drawing Functions
 
-        public void Draw() {}
-
         public void Pixel(int x, int y, Color c)
         {
             var pen = new Pen(c);
