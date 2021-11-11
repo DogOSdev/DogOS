@@ -38,5 +38,19 @@ namespace DogOS.GUI
             mouse_x = x;
             mouse_y = y;
         }
+
+        #region IMouseEvent
+
+        public void OnMouseEventState(int x, int y, Sys.MouseState old_state, Sys.MouseState state)
+        {
+            OnMouseState(old_x, old_y, old_state, state);
+        }
+
+        public void OnMouseEventMove(int old_x, int old_y, int x, int y)
+        {
+            OnMouseMove(old_x, old_y, x, y);
+        }
+
+        #endregion
     }
 }

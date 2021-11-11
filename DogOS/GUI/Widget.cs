@@ -6,7 +6,7 @@ using Sys = Cosmos.System;
 
 namespace DogOS.GUI
 {
-    public class Widget
+    public abstract class Widget
     {
         protected Widget parent;
         protected int x;
