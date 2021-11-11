@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using Sys = Cosmos.System;
-using IL2CPU.API.Attribs;
-using Cosmos.HAL;
 
 namespace DogOS
 {
