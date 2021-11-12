@@ -1,17 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <!--
-        So much is commented out, since I currently do not know how to install Cosmos.
-        I will try to figure it out soon, but for now it will be this way.
-    -->
-
     <PropertyGroup>
         <TargetFramework>netcoreapp5.0</TargetFramework>
-        <!-- <RuntimeIdentifier>cosmos</RuntimeIdentifier> -->
+        <RuntimeIdentifier>cosmos</RuntimeIdentifier>
         <SelfContained>True</SelfContained>
     </PropertyGroup>
 
-    <!-- <PropertyGroup>
+    <PropertyGroup>
         <EnableGDB>False</EnableGDB>
         <StartCosmosGDB>False</StartCosmosGDB>
         <VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
@@ -20,13 +15,13 @@
         <Profile>VMware</Profile>
         <Description>Use VMware Player or Workstation to deploy and debug.</Description>
         <PxeInterface>192.168.0.8</PxeInterface>
-    </PropertyGroup> -->
+    </PropertyGroup>
 
     <ItemGroup>
-        <!-- <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
+        <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
         <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
-        <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" /> -->
-        <PackageReference Include="System.Runtime" Version="*" />
+        <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+<!--         <PackageReference Include="System.Runtime" Version="*" /> -->
     </ItemGroup>
 
 </Project>
