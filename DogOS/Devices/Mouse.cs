@@ -94,8 +94,8 @@ namespace DogOS.Devices
 
             foreach (var mouse_event in mouse_events)
             {
-                mouse_event.OnMouseState((int)realx, (int)realy, last_state, state);
-                mouse_event.OnMouseMove((int)last_x, (int)last_y, (int)realx, (int)realy);
+                mouse_event.OnMouseEventState((int)realx, (int)realy, last_state, state);
+                mouse_event.OnMouseEventMove((int)last_x, (int)last_y, (int)realx, (int)realy);
             }
             last_state = state;
             last_x = realx;
