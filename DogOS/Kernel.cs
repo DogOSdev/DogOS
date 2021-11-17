@@ -23,8 +23,7 @@ namespace DogOS
             try
             {
                 desktop = new GUI.Desktop(640, 480, System.Drawing.Color.Blue);
-                Devices.MouseManager.AddMouseEvent(desktop);
-                var win1 = new GUI.Window(desktop, 0, 0, 30, 20, System.Drawing.Color.Red);
+                var win1 = new GUI.Window(desktop, 5, 5, 100, 100, System.Drawing.Color.Red);
                 desktop.AddChild(win1);
 
                 running = true;
@@ -37,6 +36,7 @@ namespace DogOS
 
         protected override void Run()
         {
+            desktop.Draw();
         }
     }
 }
