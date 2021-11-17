@@ -40,7 +40,8 @@ namespace DogOS.GUI
         public void Pixel(int x, int y, Color c)
         {
             var pen = new Pen(c);
-            screen.DrawPoint(pen, x, y);
+            if(x >= 0 && y >= 0 && x <= width && y <= height)
+                screen.DrawPoint(pen, x, y);
         }
 
         public void Clear()
