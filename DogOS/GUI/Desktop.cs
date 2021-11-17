@@ -19,7 +19,10 @@ namespace DogOS.GUI
             mouse_y = h / 2;
             Devices.MouseManager.ScreenWidth = (uint)w;
             Devices.MouseManager.ScreenHeight = (uint)h;
-            display_driver = new DisplayDriver(w, h);
+            Devices.MouseManager.AddMouseEvent(this);
+            Devices.MouseManager.last_x = (uint)mouse_x;
+            Devices.MouseManager.last_y = (uint)mouse_y;
+            display_driver = new BufferedDisplayDriver(w, h);
         }
 
         public void Draw()
@@ -27,8 +30,7 @@ namespace DogOS.GUI
             base.Draw(display_driver);
 
             for (int i = 0; i < 4; i++)
-            {
-                Cosmos.Core.Global.mDebugger.Send("Drawing Mouse Pixels");
+            {              
                 display_driver.Pixel(mouse_x - i, mouse_y, Color.White);
                 display_driver.Pixel(mouse_x + i, mouse_y, Color.White);
                 display_driver.Pixel(mouse_x, mouse_y - i, Color.White);
