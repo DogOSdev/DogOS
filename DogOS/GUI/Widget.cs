@@ -57,11 +57,15 @@ namespace DogOS.GUI
 
         public void OnMouseDown(int x, int y, Sys.MouseState button)
         {
-            if(focusable)
+            Cosmos.Core.Global.mDebugger.Send("Mouse down.");
+            if (focusable)
                 GetFocus(this);
         }
 
-        public void OnMouseUp(int x, int y, Sys.MouseState button) { return; }
+        public void OnMouseUp(int x, int y, Sys.MouseState button)
+        {
+            Cosmos.Core.Global.mDebugger.Send("Mouse up.");
+        }
 
         public void OnMouseMove(int old_x, int old_y, int x, int y) { return; }
 
