@@ -8,7 +8,7 @@
         <StackCorruptionDetectionEnabled>True</StackCorruptionDetectionEnabled>
         <StackCorruptionDetectionLevel>MethodFooters</StackCorruptionDetectionLevel>
         <Deployment>ISO</Deployment>
-        <DebugEnabled>True</DebugEnabled>
+        <DebugEnabled>False</DebugEnabled>
         <DebugMode>Source</DebugMode>
         <IgnoreDebugStubAttribute>False</IgnoreDebugStubAttribute>
         <Qemu_StackCorruptionDetectionEnabled>True</Qemu_StackCorruptionDetectionEnabled>
@@ -42,7 +42,7 @@
         <Bochs_Description>Use Bochs emulator to deploy and debug.</Bochs_Description>
         <Bochs_Deployment>ISO</Bochs_Deployment>
         <Bochs_Launch>Bochs</Bochs_Launch>
-        <Bochs_DebugEnabled>False</Bochs_DebugEnabled>
+        <Bochs_DebugEnabled>True</Bochs_DebugEnabled>
         <Bochs_DebugMode>Source</Bochs_DebugMode>
         <Bochs_IgnoreDebugStubAttribute>False</Bochs_IgnoreDebugStubAttribute>
         <Bochs_CosmosDebugPort>Serial: COM1</Bochs_CosmosDebugPort>

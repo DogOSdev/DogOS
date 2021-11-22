@@ -14,6 +14,9 @@ namespace DogOS.Shell
         {
             commands.Add(new Commands.EchoCommand());
             commands.Add(new Commands.SHA256Command());
+            commands.Add(new Commands.ShutdownCommand());
+            commands.Add(new Commands.ClearCommand());
+            commands.Add(new Commands.HelpCommand());
         }
 
         public static string FormatPrefix()

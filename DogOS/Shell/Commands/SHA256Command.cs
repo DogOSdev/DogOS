@@ -26,5 +26,13 @@ namespace DogOS.Shell.Commands
             Console.WriteLine(hash);
             Cosmos.System.Global.mDebugger.Send(hash);
         }
+
+        public override void Help()
+        {
+            Console.WriteLine(Description);
+
+            Console.WriteLine("\tsha256 -h || Display's help infomation.");
+            Console.WriteLine($"\tsha256 [string] || {Description}");
+        }
     }
 }

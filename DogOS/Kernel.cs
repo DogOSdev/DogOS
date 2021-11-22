@@ -21,6 +21,8 @@ namespace DogOS
 
         protected override void BeforeRun()
         {
+            Console.WriteLine($"{os_name} v{version}");
+            Console.WriteLine("(c) 2021 TaromaruYuki and Contributers.\n");
             running = true;
         }
 
