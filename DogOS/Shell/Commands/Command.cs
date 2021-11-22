@@ -4,27 +4,25 @@ using System.Text;
 
 namespace DogOS.Shell.Commands
 {
-    public abstract class Command
+    public class Command
     {
-        public string Name
-        {
-            get => name;
-        }
-        
-        public string Description
-        {
-            get => description;
-        }
-
-        protected string name;
-        protected string description;
+        public string Name { get; private set; }
+        public string Description { get; private set; }
 
         public Command(string name, string description)
         {
-            this.name = name;
-            this.description = description;
+            Name = name;
+            Description = description;
         }
 
-        public abstract int Execute(List<string> args);
+        public virtual void Execute(List<string> args)
+        {
+            return;
+        }
+
+        public virtual void Help()
+        {
+            Console.WriteLine("There is no help infomation available for this command.");
+        }
     }
 }

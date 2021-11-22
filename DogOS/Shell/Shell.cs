@@ -6,46 +6,103 @@ namespace DogOS.Shell
 {
     public static class Shell
     {
-        public static string Prefix = "{os_name}> ";
+        public static bool echo_on = true;
+        public static string Prefix = "{os_name}>";
+        public static List<Commands.Command> commands = new List<Commands.Command>();
 
-        public static string GetFormattedPrefix()
+        static Shell()
         {
-            string pre = Prefix;
-            return pre.Replace("{os_name}", Kernel.os_name);
+            commands.Add(new Commands.EchoCommand());
+            commands.Add(new Commands.SHA256Command());
+        }
+
+        public static string FormatPrefix()
+        {
+            return Prefix.Replace("{os_name}", Kernel.os_name);
+        }
+
+        // https://stackoverflow.com/a/59638742/13617487
+        // Once I implement Doggoscript (which is a old interpreted language I made), this function won't really be needed.
+        public static List<string> ParseInput(string input)
+        {
+            var args = new List<string>();
+            var current_arg = new StringBuilder();
+            var in_quotes = false;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if(input[i] == '"')
+                {
+                    if(in_quotes)
+                    {
+                        args.Add(current_arg.ToString());
+                        current_arg = new StringBuilder();
+                        in_quotes = false;
+                    }
+                    else
+                    {
+                        in_quotes = true;
+                    }
+                }
+                else if(input[i] == ' ')
+                {
+                    if(in_quotes)
+                    {
+                        current_arg.Append(input[i]);
+                    }
+                    else if(current_arg.Length > 0)
+                    {
+                        args.Add(current_arg.ToString());
+                        current_arg = new StringBuilder();
+                    }
+                }
+                else
+                {
+                    current_arg.Append(input[i]);
+                }
+            }
+
+            if(current_arg.Length > 0) args.Add(current_arg.ToString());
+
+            return args;
         }
 
         public static void Run()
         {
-            Console.Write(GetFormattedPrefix());
+            if(echo_on) Console.Write(Prefix.Replace("{os_name}", Kernel.os_name));
 
-            string input = Console.ReadLine();
+            var input = Console.ReadLine();
 
-            RunCommand(input);
-        }
-
-        public static List<string> InputToArgs(string input)
-        {
-            var t = input.Split(" ");
-            var l = new List<string>();
-
-            foreach (var i in t)
+            if(input.Length <= 0 || string.IsNullOrWhiteSpace(input))
             {
-                l.Add(i);
+                Console.WriteLine();
+                return;
             }
-            return l;
+
+            ExecuteCommand(input);
+            if(echo_on) Console.Write("\n");
         }
 
-        public static void RunCommand(string input)
+        public static void ExecuteCommand(string input)
         {
-            var split_input = InputToArgs(input);
-            var name = split_input[0].ToLower();
-            split_input.RemoveAt(0);
+            List<string> args = ParseInput(input);
+            string name = args[0].ToLower();
+            args.RemoveAt(0);
 
-            foreach (var item in CommandList.commands)
+            for (int i = 0; i < commands.Count; i++)
             {
-                if(name == item.Name)
+                var command = commands[i];
+
+                if(name == command.Name)
                 {
-                    item.Execute(split_input);
+                    if (args[0] == "-h" || args[0] == "--help")
+                    {
+                        command.Help();
+                    }
+                    else
+                    {
+                        command.Execute(args);
+                    }
                 }
             }
         }
