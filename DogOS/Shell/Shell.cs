@@ -61,7 +61,7 @@ namespace DogOS.Shell
                     current_arg.Append(input[i]);
                 }
             }
-
+                
             if(current_arg.Length > 0) args.Add(current_arg.ToString());
 
             return args;
@@ -73,7 +73,7 @@ namespace DogOS.Shell
 
             var input = Console.ReadLine();
 
-            if(input.Length <= 0 || string.IsNullOrWhiteSpace(input))
+            if(input.Length <= 0 || string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
             {
                 Console.WriteLine();
                 return;
@@ -95,13 +95,20 @@ namespace DogOS.Shell
 
                 if(name == command.Name)
                 {
-                    if (args[0] == "-h" || args[0] == "--help")
+                    if(args.Count == 0)
                     {
-                        command.Help();
+                        command.Execute();
                     }
                     else
                     {
-                        command.Execute(args);
+                        if (args[0] == "-h" || args[0] == "--help")
+                        {
+                            command.Help();
+                        }
+                        else
+                        {
+                            command.Execute(args);
+                        }
                     }
                 }
             }

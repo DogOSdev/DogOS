@@ -15,6 +15,11 @@ namespace DogOS.Shell.Commands
             Description = description;
         }
 
+        public virtual void Execute()
+        {
+            return;
+        }
+
         public virtual void Execute(List<string> args)
         {
             return;

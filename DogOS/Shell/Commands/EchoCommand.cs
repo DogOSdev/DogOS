@@ -8,22 +8,20 @@ namespace DogOS.Shell.Commands
     {
         public EchoCommand() : base("echo", "Echo a message, or toggle echo.") { }
 
+        public override void Execute()
+        {
+            Console.WriteLine("h");
+        }
+
         public override void Execute(List<string> args)
         {
-            if(args.Count <= 0)
-            {
-                Console.WriteLine("h");
-            }
-            else
-            {
-                var str = new StringBuilder();
+            var str = new StringBuilder();
 
-                foreach (var arg in args)
-                {
-                    str.Append($"{arg} ");
-                }
-                Console.WriteLine(str);
+            foreach (var arg in args)
+            {
+                str.Append($"{arg} ");
             }
+            Console.WriteLine(str);
         }
 
         public override void Help()
