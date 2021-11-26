@@ -14,8 +14,6 @@ namespace DogOS
         public string version = "0.0.1";
         public static bool running = false;
         public static bool inGUI = false;
-        public GUI.Desktop desktop;
-        public static System.Drawing.Color background = System.Drawing.Color.White;
 
         #endregion
 
