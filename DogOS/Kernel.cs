@@ -13,30 +13,23 @@ namespace DogOS
         public static string os_name = "DogOS";
         public string version = "0.0.1";
         public static bool running = false;
-        public GUI.Desktop desktop;
-        public static System.Drawing.Color background = System.Drawing.Color.White;
+        public static bool inGUI = false;
 
         #endregion
 
         protected override void BeforeRun()
         {
-            try
-            {
-                desktop = new GUI.Desktop(640, 480, System.Drawing.Color.Blue);
-                var win1 = new GUI.Window(desktop, 5, 5, 100, 100, System.Drawing.Color.Red);
-                desktop.AddChild(win1);
-
-                running = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            Console.WriteLine($"{os_name} v{version}");
+            Console.WriteLine("(c) 2021 TaromaruYuki and Contributers.\n");
+            running = true;
         }
 
         protected override void Run()
         {
-            desktop.Draw();
+            if(!inGUI)
+            {
+                Shell.Shell.Run();
+            }
         }
     }
 }
