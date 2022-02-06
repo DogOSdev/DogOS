@@ -8,6 +8,7 @@
 - [What is DogOS?](#what-is-dogos)
 - [Features](#features)
 - [Screenshots](#screenshots)
+- [Building](#building)
 
 ## What is DogOS?
 
@@ -27,3 +28,12 @@ Check the repositories [Project's](https://github.com/DogOSdev/DogOS/projects) t
 Right now DogOS is in a very *early* development stage, so there isn't really anything to show yet.
 
 This section will be updated when there's more things added.
+
+## Building
+
+You can build DogOS on your own, and help development if you want. There are multiple steps to building.
+
+1. Install the COSMOS Dev Kit. The instructions are [here](https://www.gocosmos.org/docs/install/).
+1. Once installed, clone the repository and open the project in Visual Studio 2019.
+1. If needed, open the project's Properties and change the profile. If you are using VMware, make sure to change the edition to your edition. It is currently at Workstation.
+1. Run the project, and it should open and boot!
