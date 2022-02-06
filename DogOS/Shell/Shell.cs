@@ -76,12 +76,6 @@ namespace DogOS.Shell
 
             var input = Console.ReadLine();
 
-            if(input.Length <= 0 || string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
-            {
-                Console.WriteLine();
-                return;
-            }
-
             ExecuteCommand(input);
             if(echo_on) Console.Write("\n");
         }
@@ -101,20 +95,26 @@ namespace DogOS.Shell
                     if(args.Count == 0)
                     {
                         command.Execute();
+                        return;
                     }
                     else
                     {
                         if (args[0] == "-h" || args[0] == "--help")
                         {
                             command.Help();
+                            return;
                         }
                         else
                         {
                             command.Execute(args);
+                            return;
                         }
                     }
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"ERR: Command '{name}' does not exist.");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
