@@ -10,18 +10,41 @@ namespace DogOS.Shell.Commands
 
         public override void Execute()
         {
-            Console.WriteLine("h");
+            if(Shell.echo_on)
+                Console.WriteLine("Echo is enabled.");
+            else
+                Console.WriteLine("Echo is disabled.");
         }
 
         public override void Execute(List<string> args)
         {
-            var str = new StringBuilder();
-
-            foreach (var arg in args)
+            if(args[0] != "-t")
             {
-                str.Append($"{arg} ");
+                var str = new StringBuilder();
+
+                foreach (var arg in args)
+                {
+                    str.Append($"{arg} ");
+                }
+                Console.WriteLine(str);
+                return;
             }
-            Console.WriteLine(str);
+            
+            var lower = args[1].ToLower();
+
+            if(lower == "on")
+            {
+                Shell.echo_on = true;
+
+            }
+            else if(lower == "off")
+            {
+                Shell.echo_on = false;
+            }
+            else
+            {
+                Console.WriteLine($"ERR: '{args[1]}' is not a valid option. Valid options are 'ON' or 'OFF'.");
+            }
         }
 
         public override void Help()
@@ -31,7 +54,7 @@ namespace DogOS.Shell.Commands
             Console.WriteLine("\techo -h || Display's help message.");
             Console.WriteLine($"\techo [message] || {Description}");
             Console.WriteLine($"\techo -t (ON | OFF) || Turns echo on or off");
-            Console.WriteLine("echo || Displays the echo setting.");
+            Console.WriteLine("\techo || Displays the echo setting.");
         }
     }
 }
