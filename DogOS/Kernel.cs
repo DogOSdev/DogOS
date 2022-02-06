@@ -19,8 +19,11 @@ namespace DogOS
 
         protected override void BeforeRun()
         {
+            Console.Clear();
+            Console.Beep();
             Console.WriteLine($"{os_name} v{version}");
-            Console.WriteLine("(c) 2021 TaromaruYuki and Contributers.\n");
+            Console.WriteLine("(c) 2021 TaromaruYuki and Contributers.");
+            Console.WriteLine($"Available heap memory: {Cosmos.Core.GCImplementation.GetAvailableRAM()}mb\n");
             running = true;
         }
 
