@@ -53,7 +53,8 @@ namespace DogOS.Shell.Commands
             Console.WriteLine(Description);
 
             Console.WriteLine("\techo -h || Display's help message.");
-            Console.WriteLine($"\techo [message] || {Description}");
+            Console.WriteLine($"\techo [message]* || {Description}");
+            Console.WriteLine($"\techo \"[message]\" || {Description}");
             Console.WriteLine($"\techo -t (ON | OFF) || Turns echo on or off");
             Console.WriteLine("\techo || Displays the echo setting.");
         }
