@@ -69,6 +69,7 @@ namespace DogOS.Shell.Commands.Filesystem
             Console.WriteLine(Description);
 
             Console.WriteLine($"\tdir || {Description}");
+            Console.WriteLine($"\tdir [directories]* || Go down the directory tree specified.");
         }
     }
 }
