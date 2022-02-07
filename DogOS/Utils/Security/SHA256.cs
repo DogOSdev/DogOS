@@ -42,7 +42,6 @@ namespace DogOS.Utils.Security
             H[7] = 0x5BE0CD19;
 
             return toreturn;
-
         }
 
         private static UInt32 ROTL(UInt32 x, byte n)
@@ -85,7 +84,6 @@ namespace DogOS.Utils.Security
             return ROTR(x, 17) ^ ROTR(x, 19) ^ (x >> 10);
         }
 
-
         private static UInt32[] H = new UInt32[8] {
             0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19
         };
@@ -100,7 +98,6 @@ namespace DogOS.Utils.Security
 
         private void processBlock(UInt32[] M)
         {
-
             // 1. Prepare the message schedule (W[t]):
             UInt32[] W = new UInt32[64];
             for (int t = 0; t < 16; ++t)
@@ -251,6 +248,5 @@ namespace DogOS.Utils.Security
 
             return dest;
         }
-
     }
 }

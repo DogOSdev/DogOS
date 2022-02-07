@@ -6,11 +6,13 @@ namespace DogOS.Shell.Commands
 {
     public class EchoCommand : Command
     {
-        public EchoCommand() : base("echo", "Echo a message, or toggle echo.") { }
+        public EchoCommand() : base("echo", "Echo a message, or toggle echo.")
+        {
+        }
 
         public override void Execute()
         {
-            if(Shell.echo_on)
+            if (Shell.echo_on)
                 Console.WriteLine("Echo is enabled.");
             else
                 Console.WriteLine("Echo is disabled.");
@@ -18,7 +20,7 @@ namespace DogOS.Shell.Commands
 
         public override void Execute(List<string> args)
         {
-            if(args[0] != "-t")
+            if (args[0] != "-t")
             {
                 var str = new StringBuilder();
 
@@ -29,15 +31,14 @@ namespace DogOS.Shell.Commands
                 Console.WriteLine(str);
                 return;
             }
-            
+
             var lower = args[1].ToLower();
 
-            if(lower == "on")
+            if (lower == "on")
             {
                 Shell.echo_on = true;
-
             }
-            else if(lower == "off")
+            else if (lower == "off")
             {
                 Shell.echo_on = false;
             }

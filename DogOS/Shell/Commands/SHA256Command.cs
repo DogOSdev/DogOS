@@ -6,11 +6,13 @@ namespace DogOS.Shell.Commands
 {
     public class SHA256Command : Command
     {
-        public SHA256Command() : base("sha256", "Hashes a string.") { }
+        public SHA256Command() : base("sha256", "Hashes a string.")
+        {
+        }
 
         public override void Execute(List<string> args)
         {
-            if(args.Count <= 0) return;
+            if (args.Count <= 0) return;
 
             var str = new StringBuilder();
 
