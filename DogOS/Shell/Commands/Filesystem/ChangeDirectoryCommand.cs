@@ -19,7 +19,7 @@ namespace DogOS.Shell.Commands.Filesystem
 
         public override void Execute()
         {
-            Console.WriteLine("Change Directory Command.");
+            Console.WriteLine("Execute cd.");
         }
 
         public override void Execute(List<string> args)
