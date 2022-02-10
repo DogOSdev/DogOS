@@ -21,6 +21,8 @@ namespace DogOS.Shell
             commands.Add(new Commands.HelpCommand());
 
             commands.Add(new Commands.Filesystem.DirectoryCommand());
+            commands.Add(new Commands.Filesystem.TouchCommand());
+            commands.Add(new Commands.Filesystem.ReadCommand());
         }
 
         public static string FormatPrefix()
@@ -80,6 +82,12 @@ namespace DogOS.Shell
             if (echo_on) Console.Write(Prefix.Replace("{os_name}", Kernel.os_name));
 
             var input = Console.ReadLine();
+
+            if(input.Length <= 0 || string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine();
+                return;
+            }
 
             ExecuteCommand(input);
             if (echo_on) Console.Write("\n");
