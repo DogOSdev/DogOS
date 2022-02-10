@@ -45,7 +45,7 @@ namespace DogOS.Shell.Commands.Filesystem
 
         public override void Execute()
         {
-            GetDirectoryContents($"{Shell.drive}:\\{Shell.dir}");
+            GetDirectoryContents($"{Shell.drive}:{Shell.dir}");
         }
 
         public override void Execute(List<string> args)
@@ -56,12 +56,12 @@ namespace DogOS.Shell.Commands.Filesystem
             {
                 var arg = args[i];
                 tree.Append(arg);
-
-                if (i < args.Count - 1)
-                    tree.Append(@"\");
+                tree.Append(@"\");
             }
 
-            GetDirectoryContents($"{Shell.drive}:\\{Shell.dir}\\{tree.ToString()}");
+            Console.WriteLine($"{Shell.drive}:{Shell.dir}{tree}");
+
+            GetDirectoryContents($"{Shell.drive}:{Shell.dir}{tree}");
         }
 
         public override void Help()
