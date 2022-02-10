@@ -11,12 +11,32 @@ namespace DogOS.Shell.Commands.Filesystem
 
         public override void Execute()
         {
-            Console.WriteLine("Execute touch.");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("ERR: Missing filename.");
+            Console.ForegroundColor = ConsoleColor.White;
         }
+
 
         public override void Execute(List<string> args)
         {
-            Execute();
+            if(File.Exists($"{Shell.drive}:{Shell.dir}{args[0]}"))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("ERR: File exists.");
+                Console.ForegroundColor = ConsoleColor.White;
+                return;
+            }
+
+            try
+            {
+                File.Create($"{Shell.drive}:{Shell.dir}{args[0]}");
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(e.ToString());
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
         public override void Help()
