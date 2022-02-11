@@ -2,8 +2,9 @@ namespace DogOS.Users
 {
     enum Roles
     {
-        System = -1,
+        System = 0,
         Admin = 1,
-        User = 2
+        User = 2,
+        Guest = 3
     }
 }
