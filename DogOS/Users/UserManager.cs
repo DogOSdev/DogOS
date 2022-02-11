@@ -40,14 +40,15 @@ namespace DogOS.Users
             {
                 var username = Utils.FileTypes.Ini.ReadFile(user_key.ToUpper(), "USERNAME", user_ini);
                 var password = Utils.FileTypes.Ini.ReadFile(user_key.ToUpper(), "PASSWORD", user_ini);
+                var role = Utils.Filetypes.Ini.ReadFile(user_key.ToUpper(), "ROLE", user_ini, 3);
 
                 if(password == "")
                 {
-                    users.Add(new User(username));
+                    users.Add(new User(username, (Roles)role));
                 }
                 else
                 {
-                    users.Add(new User(username, password));
+                    users.Add(new User(username, (Roles)role, password));
                 }
             }
 
