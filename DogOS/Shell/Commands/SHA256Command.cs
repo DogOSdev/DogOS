@@ -26,7 +26,6 @@ namespace DogOS.Shell.Commands
             string hash = Utils.Security.Sha256.hash(str.ToString());
 
             Console.WriteLine(hash);
-            Cosmos.System.Global.mDebugger.Send(hash);
         }
 
         public override void Help()
