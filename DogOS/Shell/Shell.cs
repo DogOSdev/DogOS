@@ -7,7 +7,7 @@ namespace DogOS.Shell
     public static class Shell
     {
         public static bool echo_on = true;
-        public static string Prefix = "0:/>";
+        public static string Prefix = "$os_name $drive:\\>";
         public static List<Commands.Command> commands = new List<Commands.Command>();
         public static string drive = "0";
         public static string dir = @"\";
@@ -27,8 +27,7 @@ namespace DogOS.Shell
 
         public static string FormatPrefix()
         {
-            string res = Prefix.Replace("{os_name}", Kernel.os_name);
-            return res.Replace("{drive}", "0");
+            return Prefix.Replace("$os_name", Kernel.os_name).Replace("$drive", drive);
         }
 
         // https://stackoverflow.com/a/59638742/13617487
@@ -79,7 +78,7 @@ namespace DogOS.Shell
 
         public static void Run()
         {
-            if (echo_on) Console.Write(Prefix.Replace("{os_name}", Kernel.os_name));
+            if (echo_on) Console.Write(FormatPrefix());
 
             var input = Console.ReadLine();
 
