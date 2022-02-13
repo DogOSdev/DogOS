@@ -12,8 +12,8 @@ namespace DogOS
         public static bool running = false;
         public static bool inGUI = false;
         public static Sys.FileSystem.CosmosVFS fs = new Sys.FileSystem.CosmosVFS();
-        public static UserManager users = new UserManager();
-        public static User curr_user; 
+        public static Users.UserManager users = new Users.UserManager();
+        public static Users.User curr_user; 
 
         #endregion globals
 
@@ -29,61 +29,109 @@ namespace DogOS
             {
                 Console.WriteLine("No users were loaded...");
                 Console.WriteLine("Press any key to continue...");
-                Console.Read();
+                Console.ReadLine();
             }
 
             Console.Clear();
             Console.Beep();
-            Console.WriteLine($"{os_name} v{version}");
-            Console.WriteLine("(c) 2021 TaromaruYuki and Contributers.");
-            Console.WriteLine($"Available heap memory: {Cosmos.Core.GCImplementation.GetAvailableRAM()}mb\n");
             running = true;
 
-            if(users.users.Count == 0)
+            if (users.users.Count == 0)
             {
-                curr_user = new Users.User("Guest", Roles.Guest);
+                curr_user = new Users.User("Guest", Users.Roles.Guest);
             }
             else
             {
+                ConsoleKeyInfo choice;
+
                 while(true)
                 {
-                    Console.Write("Username: ");
-                    var username = Console.ReadLine();
+                    Console.Clear();
+                    Console.WriteLine("Would you like to sign in? (y/n)");
+                    choice = Console.ReadKey(true);
 
-                    Users.User found_user = null;
-                    foreach(var user in users.users)
+                    if(choice.Key == ConsoleKey.Y || choice.Key == ConsoleKey.N)
+                        break;
+                }
+
+                if(choice.Key == ConsoleKey.N)
+                {
+                    curr_user = new Users.User("Guest", Users.Roles.Guest);
+                }
+                else
+                {
+                    while (true)
                     {
-                        if(user.GetUsername() == username)
+                        Console.Write("Username: ");
+                        var username = Console.ReadLine();
+
+                        Users.User found_user = null;
+                        foreach (var user in users.users)
                         {
-                            found_user = user;
+                            if (user.GetUsername() == username)
+                            {
+                                found_user = user;
+                            }
                         }
-                    }
 
-                    if(found_user == null)
-                    {
-                        Console.WriteLine($"Username {username} does not exist!");
-                        continue;
-                    }
-
-
-                    while(true)
-                    {
-                        // TODO: Do not echo password when typing.
-                        Console.Write("Password: ");
-                        var password = Console.ReadLine();
-
-                        if(found_user.VerifyPassword(password))
+                        if (found_user == null)
                         {
-                            break;
+                            Console.WriteLine($"Username {username} does not exist!");
+                            continue;
                         }
-                        
-                        Console.WriteLine("Invalid password.");
-                    }
 
-                    curr_user = found_user;
-                    break;
+
+                        while (true)
+                        {
+                            Console.Write("Password: ");
+                            string password = "";
+                            ConsoleKeyInfo key_info;
+
+                            do
+                            {
+                                key_info = Console.ReadKey(true);
+
+                                if (key_info.Key != ConsoleKey.Backspace && key_info.Key != ConsoleKey.Enter)
+                                {
+                                    password += key_info.KeyChar;
+                                    Console.Write("*");
+                                }
+                                else
+                                {
+                                    if (key_info.Key == ConsoleKey.Backspace && password.Length > 0)
+                                    {
+                                        password = password.Substring(0, (password.Length - 1));
+                                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                                        Console.Write(" ");
+                                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                                    }
+                                }
+                            }
+                            while (key_info.Key != ConsoleKey.Enter);
+                            Console.Write("\n");
+
+                            if (found_user.VerifyPassword(password))
+                            {
+                                break;
+                            }
+
+                            Console.WriteLine("Invalid password.");
+                        }
+
+                        curr_user = found_user;
+                        break;
+                    }
                 }
             }
+
+            
+
+            Console.Clear();
+            Console.Beep(880, 100);
+            Console.WriteLine($"{os_name} v{version}");
+            Console.WriteLine("(c) 2021 TaromaruYuki and Contributers.");
+            Console.WriteLine($"Available heap memory: {Cosmos.Core.GCImplementation.GetAvailableRAM()}mb\n");
+            Console.WriteLine($"Logged in as {curr_user.GetUsername()}");
         }
 
         protected override void Run()

@@ -3,11 +3,11 @@ using System.Text;
 
 namespace DogOS.Users
 {
-    class User
+    public class User
     {
         private string username;
         private string password;
-        private Role role;
+        private Roles role;
         
         public User(string username, Roles role)
         {
@@ -30,14 +30,19 @@ namespace DogOS.Users
             return username;
         }
 
+        public Roles GetRole()
+        {
+            return role;
+        }
+
         public bool VerifyPassword(string needle)
         {
             // TODO: Implement a timing-safe verification.
             // Unless if one isn't really needed for something this simple?
 
-            string hashed_needle = Utils.Security.Sha256.hash(needle);
+            string hashed_needle = Utils.Security.Sha256.hash(needle).ToUpper();
 
-            return hashed_needle == password;
+            return hashed_needle == password.ToUpper();
         }
 
         public bool PasswordIsEmpty()

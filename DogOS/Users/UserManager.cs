@@ -5,31 +5,14 @@ using System.IO;
 
 namespace DogOS.Users
 {
-    class UserManager
+    public class UserManager
     {
         public List<User> users = new List<User>();
 
-        public int LoadUsers(string user_ini_file)
+        public int LoadUsers(string user_ini)
         {
             // Remove the old users loaded, if loaded before
             users.Clear();
-
-            // Read the file that was given
-            string user_ini = "";
-
-            // Get the user ini file
-            try
-            {
-                user_ini = File.ReadAllText(user_ini_file);
-            }
-            catch(Exception e)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(e.ToString());
-                Console.ForegroundColor = ConsoleColor.White;
-
-                return -1;
-            }
 
             // Get the user sections from the list of users
             var user_sections_str = Utils.FileTypes.Ini.ReadFile("LIST", "LIST", user_ini);
@@ -40,15 +23,23 @@ namespace DogOS.Users
             {
                 var username = Utils.FileTypes.Ini.ReadFile(user_key.ToUpper(), "USERNAME", user_ini);
                 var password = Utils.FileTypes.Ini.ReadFile(user_key.ToUpper(), "PASSWORD", user_ini);
-                var role = Utils.Filetypes.Ini.ReadFile(user_key.ToUpper(), "ROLE", user_ini, 3);
+                var role = Utils.FileTypes.Ini.ReadFile(user_key.ToUpper(), "ROLE", user_ini);
 
-                if(password == "")
+                int role_int;
+                if(int.TryParse(role, out role_int))
                 {
-                    users.Add(new User(username, (Roles)role));
+                    if (password == "")
+                    {
+                        users.Add(new User(username, (Roles)role_int));
+                    }
+                    else
+                    {
+                        users.Add(new User(username, (Roles)role_int, password));
+                    }
                 }
                 else
                 {
-                    users.Add(new User(username, (Roles)role, password));
+                    Console.WriteLine($"Failed to load user '{username}'. Role id is not a integer.");
                 }
             }
 
