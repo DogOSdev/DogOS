@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Sys = Cosmos.System;
 
 namespace DogOS
@@ -8,12 +9,15 @@ namespace DogOS
         #region globals
 
         public static string os_name = "DogOS";
-        public string version = "0.0.1";
-        public static bool running = false;
-        public static bool inGUI = false;
+        public static string codename;
+        public static string build_type;
+        public static string version;
+        public static string temp_dir;
+        public static string os_dir;
+        public static Users.User curr_user;
+
         public static Sys.FileSystem.CosmosVFS fs = new Sys.FileSystem.CosmosVFS();
         public static Users.UserManager users = new Users.UserManager();
-        public static Users.User curr_user; 
 
         #endregion globals
 
@@ -21,6 +25,17 @@ namespace DogOS
         {
             Console.WriteLine("Registering Filesystem...");
             Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
+
+            Console.WriteLine("Loading System Info.");
+            string os_info = Utils.FileTypes.Ini.ReadFile("SYSTEM", "OS", "0:\\system.ini", "UNKNOWN|UNKNOWN|0.0.0");
+            string[] os_info_split = os_info.Split("|");
+
+            os_dir = Utils.FileTypes.Ini.ReadFile("SYSTEM", "DIR", "0:\\system.ini", "dogos");
+            temp_dir = Utils.FileTypes.Ini.ReadFile("SYSTEM", "TEMP", "0:\\system.ini", $"{os_dir}\\temp");
+
+            codename = os_info_split[0];
+            build_type = os_info_split[1];
+            version = os_info_split[2];
 
             Console.WriteLine("Loading users...");
             users.LoadUsers("0:\\users.ini");
@@ -34,7 +49,6 @@ namespace DogOS
 
             Console.Clear();
             Console.Beep();
-            running = true;
 
             if (users.users.Count == 0)
             {
@@ -124,11 +138,9 @@ namespace DogOS
                 }
             }
 
-            
-
             Console.Clear();
             Console.Beep(880, 100);
-            Console.WriteLine($"{os_name} v{version}");
+            Console.WriteLine($"{os_name} {codename} ({build_type}) v{version}");
             Console.WriteLine("(c) 2021 TaromaruYuki and Contributers.");
             Console.WriteLine($"Available heap memory: {Cosmos.Core.GCImplementation.GetAvailableRAM()}mb\n");
             Console.WriteLine($"Logged in as {curr_user.GetUsername()}");
@@ -136,10 +148,7 @@ namespace DogOS
 
         protected override void Run()
         {
-            if (!inGUI)
-            {
-                Shell.Shell.Run();
-            }
+            Shell.Shell.Run();
         }
     }
 }
