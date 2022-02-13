@@ -16,6 +16,9 @@ namespace DogOS
         public static string os_dir;
         public static Users.User curr_user;
 
+        public static string drive;
+        public static string dir = @"\";
+
         public static Sys.FileSystem.CosmosVFS fs = new Sys.FileSystem.CosmosVFS();
         public static Users.UserManager users = new Users.UserManager();
 
@@ -32,6 +35,7 @@ namespace DogOS
 
             os_dir = Utils.FileTypes.Ini.ReadFile("SYSTEM", "DIR", "0:\\system.ini", "dogos");
             temp_dir = Utils.FileTypes.Ini.ReadFile("SYSTEM", "TEMP", "0:\\system.ini", $"{os_dir}\\temp");
+            drive = Utils.FileTypes.Ini.ReadFile("SYSTEM", "MAIN_DRIVE", "0:\\system.ini", "0:");
 
             codename = os_info_split[0];
             build_type = os_info_split[1];

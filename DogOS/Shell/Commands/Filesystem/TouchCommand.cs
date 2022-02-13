@@ -19,7 +19,7 @@ namespace DogOS.Shell.Commands.Filesystem
 
         public override void Execute(List<string> args)
         {
-            if(File.Exists($"{Shell.drive}:{Shell.dir}{args[0]}"))
+            if(File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("ERR: File exists.");
@@ -29,7 +29,7 @@ namespace DogOS.Shell.Commands.Filesystem
 
             try
             {
-                File.Create($"{Shell.drive}:{Shell.dir}{args[0]}");
+                File.Create($"{Kernel.drive}{Kernel.dir}{args[0]}");
             }
             catch (Exception e)
             {

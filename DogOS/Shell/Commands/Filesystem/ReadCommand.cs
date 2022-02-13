@@ -17,11 +17,11 @@ namespace DogOS.Shell.Commands.Filesystem
 
         public override void Execute(List<string> args)
         {
-            if(File.Exists($"{Shell.drive}:{Shell.dir}{args[0]}"))
+            if(File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
                 try
                 {
-                    foreach (var line in File.ReadAllLines($"{Shell.drive}:{Shell.dir}{args[0]}"))
+                    foreach (var line in File.ReadAllLines($"{Kernel.drive}{Kernel.dir}{args[0]}"))
                     {
                         Console.WriteLine(line);
                     }
@@ -36,7 +36,7 @@ namespace DogOS.Shell.Commands.Filesystem
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"ERR: File '{Shell.drive}:{Shell.dir}{args[0]}' does not exist.");
+                Console.WriteLine($"ERR: File '{Kernel.drive}{Kernel.dir}{args[0]}' does not exist.");
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }

@@ -13,7 +13,7 @@ namespace DogOS.Shell.Commands.Filesystem
 
         private void GetDirectoryContents(string curr_dir)
         {
-            if (Shell.dir != @"\")
+            if (curr_dir != $"{Kernel.drive}\\")
             {
                 Console.BackgroundColor = ConsoleColor.Green;
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -45,23 +45,12 @@ namespace DogOS.Shell.Commands.Filesystem
 
         public override void Execute()
         {
-            GetDirectoryContents($"{Shell.drive}:{Shell.dir}");
+            GetDirectoryContents($"{Kernel.drive}{Kernel.dir}");
         }
 
         public override void Execute(List<string> args)
         {
-            var tree = new StringBuilder();
-
-            for (int i = 0; i < args.Count; i++)
-            {
-                var arg = args[i];
-                tree.Append(arg);
-                tree.Append(@"\");
-            }
-
-            Console.WriteLine($"{Shell.drive}:{Shell.dir}{tree}");
-
-            GetDirectoryContents($"{Shell.drive}:{Shell.dir}{tree}");
+            Execute();
         }
 
         public override void Help()
@@ -69,7 +58,6 @@ namespace DogOS.Shell.Commands.Filesystem
             Console.WriteLine(Description);
 
             Console.WriteLine($"\tdir || {Description}");
-            Console.WriteLine($"\tdir [directories]* || Go down the directory tree specified.");
         }
     }
 }
