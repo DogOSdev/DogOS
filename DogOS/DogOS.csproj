@@ -17,6 +17,7 @@
 	    <CompileVBEMultiboot>False</CompileVBEMultiboot>
 	    <VBEResolution>800x600x32</VBEResolution>
 	    <VMwareEdition>Workstation</VMwareEdition>
+	    <ExtractMapFile>False</ExtractMapFile>
     </PropertyGroup>
 
     <PropertyGroup>

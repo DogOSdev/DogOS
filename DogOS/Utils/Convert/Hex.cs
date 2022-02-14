@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DogOS.Utils.Convert
+﻿namespace DogOS.Utils.Convert
 {
     public class Hex
     {

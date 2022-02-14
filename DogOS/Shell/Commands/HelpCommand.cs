@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DogOS.Shell.Commands
 {
     public class HelpCommand : Command
     {
-        public HelpCommand() : base("help", "Get infomation about a command.") { }
+        public HelpCommand() : base("help", "Get infomation about a command.")
+        {
+        }
 
         public override void Execute()
         {
@@ -23,7 +24,7 @@ namespace DogOS.Shell.Commands
             {
                 var cmd = Shell.commands[i];
 
-                if(cmd_name == cmd.Name)
+                if (cmd_name == cmd.Name)
                 {
                     cmd.Help();
                 }

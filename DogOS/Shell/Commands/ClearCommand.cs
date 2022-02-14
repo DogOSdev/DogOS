@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DogOS.Shell.Commands
 {
     public class ClearCommand : Command
     {
-        public ClearCommand() : base("clear", "Clears the screen") { }
+        public ClearCommand() : base("clear", "Clears the screen")
+        {
+        }
 
         public override void Execute()
         {

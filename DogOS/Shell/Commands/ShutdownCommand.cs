@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DogOS.Shell.Commands
 {
     public class ShutdownCommand : Command
     {
-        public ShutdownCommand() : base("shutdown", "Shuts down your computer.") { }
+        public ShutdownCommand() : base("shutdown", "Shuts down your computer.")
+        {
+        }
 
         public override void Execute()
         {
@@ -15,7 +16,7 @@ namespace DogOS.Shell.Commands
 
         public override void Execute(List<string> args)
         {
-            if(args.Contains("-r") || args.Contains("--restart"))
+            if (args.Contains("-r") || args.Contains("--restart"))
             {
                 Cosmos.System.Power.Reboot();
                 return;

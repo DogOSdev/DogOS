@@ -7,7 +7,7 @@ namespace DogOS.Shell
     public static class Shell
     {
         public static bool echo_on = true;
-        public static string Prefix = "{os_name}>";
+        public static string Prefix = "$os_name $drive$path>";
         public static List<Commands.Command> commands = new List<Commands.Command>();
 
         static Shell()
@@ -17,11 +17,15 @@ namespace DogOS.Shell
             commands.Add(new Commands.ShutdownCommand());
             commands.Add(new Commands.ClearCommand());
             commands.Add(new Commands.HelpCommand());
+
+            commands.Add(new Commands.Filesystem.DirectoryCommand());
+            commands.Add(new Commands.Filesystem.TouchCommand());
+            commands.Add(new Commands.Filesystem.ReadCommand());
         }
 
         public static string FormatPrefix()
         {
-            return Prefix.Replace("{os_name}", Kernel.os_name);
+            return Prefix.Replace("$os_name", Kernel.os_name).Replace("$drive", Kernel.drive).Replace("$path", Kernel.dir);
         }
 
         // https://stackoverflow.com/a/59638742/13617487
@@ -34,9 +38,9 @@ namespace DogOS.Shell
 
             for (int i = 0; i < input.Length; i++)
             {
-                if(input[i] == '"')
+                if (input[i] == '"')
                 {
-                    if(in_quotes)
+                    if (in_quotes)
                     {
                         args.Add(current_arg.ToString());
                         current_arg = new StringBuilder();
@@ -47,13 +51,13 @@ namespace DogOS.Shell
                         in_quotes = true;
                     }
                 }
-                else if(input[i] == ' ')
+                else if (input[i] == ' ')
                 {
-                    if(in_quotes)
+                    if (in_quotes)
                     {
                         current_arg.Append(input[i]);
                     }
-                    else if(current_arg.Length > 0)
+                    else if (current_arg.Length > 0)
                     {
                         args.Add(current_arg.ToString());
                         current_arg = new StringBuilder();
@@ -64,15 +68,15 @@ namespace DogOS.Shell
                     current_arg.Append(input[i]);
                 }
             }
-                
-            if(current_arg.Length > 0) args.Add(current_arg.ToString());
+
+            if (current_arg.Length > 0) args.Add(current_arg.ToString());
 
             return args;
         }
 
         public static void Run()
         {
-            if(echo_on) Console.Write(Prefix.Replace("{os_name}", Kernel.os_name));
+            if (echo_on) Console.Write(FormatPrefix());
 
             var input = Console.ReadLine();
 
@@ -83,7 +87,7 @@ namespace DogOS.Shell
             }
 
             ExecuteCommand(input);
-            if(echo_on) Console.Write("\n");
+            if (echo_on) Console.Write("\n");
         }
 
         public static void ExecuteCommand(string input)
@@ -96,25 +100,31 @@ namespace DogOS.Shell
             {
                 var command = commands[i];
 
-                if(name == command.Name)
+                if (name == command.Name)
                 {
-                    if(args.Count == 0)
+                    if (args.Count == 0)
                     {
                         command.Execute();
+                        return;
                     }
                     else
                     {
                         if (args[0] == "-h" || args[0] == "--help")
                         {
                             command.Help();
+                            return;
                         }
                         else
                         {
                             command.Execute(args);
+                            return;
                         }
                     }
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"ERR: Command '{name}' does not exist.");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
