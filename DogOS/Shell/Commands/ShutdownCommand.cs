@@ -5,7 +5,7 @@ namespace DogOS.Shell.Commands
 {
     public class ShutdownCommand : Command
     {
-        public ShutdownCommand() : base("shutdown", "Shuts down your computer.", DogOS.Shell.Category.General)
+        public ShutdownCommand() : base("shutdown", "Shuts down your computer.", CommandCategory.General)
         {
         }
 

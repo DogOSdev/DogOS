@@ -6,7 +6,7 @@ namespace DogOS.Shell.Commands.Filesystem
 {
     class RemoveFileCommand : Command
     {
-        public RemoveFileCommand() : base("rmfile", "Remove a file", DogOS.Shell.Category.Filesystem) { }
+        public RemoveFileCommand() : base("rmfile", "Remove a file", CommandCategory.Filesystem) { }
 
         public override void Execute()
         {

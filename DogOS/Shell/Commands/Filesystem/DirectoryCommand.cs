@@ -7,7 +7,7 @@ namespace DogOS.Shell.Commands.Filesystem
 {
     public class DirectoryCommand : Command
     {
-        public DirectoryCommand() : base("dir", "List the current directory", DogOS.Shell.Category.Filesystem)
+        public DirectoryCommand() : base("dir", "List the current directory", CommandCategory.Filesystem)
         {
         }
 

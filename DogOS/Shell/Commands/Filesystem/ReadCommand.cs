@@ -6,7 +6,7 @@ namespace DogOS.Shell.Commands.Filesystem
 {
     public class ReadCommand : Command
     {
-        public ReadCommand() : base("read", "Read a file.", DogOS.Shell.Category.Filesystem) { }
+        public ReadCommand() : base("read", "Read a file.", CommandCategory.Filesystem) { }
 
         public override void Execute()
         {

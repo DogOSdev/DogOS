@@ -8,9 +8,9 @@ namespace DogOS.Shell.Commands
         public string Name { get; private set; }
         public string Description { get; private set; }
 
-        public Category Category { get; private set; }
+        public CommandCategory Category { get; private set; }
 
-        public Command(string name, string description, Category category)
+        public Command(string name, string description, CommandCategory category)
         {
             Name = name;
             Description = description;
