@@ -31,3 +31,6 @@ RUN sudo rm -rf \
     /home/gitpod/Cosmos-Userkit_20200708/source/Tools
 RUN sudo mv /home/gitpod/Cosmos-Userkit_20200708/source/* /home/gitpod/.nuget/packages/
 RUN sudo rm -rf /home/gitpod/Cosmos-Userkit_20200708 /home/gitpod/cosmos_source.zip
+
+RUN sudo chmod ugo+rwx /home/gitpod/.nuget
+RUN sudo chmod ugo+rwx /home/gitpod/packages
