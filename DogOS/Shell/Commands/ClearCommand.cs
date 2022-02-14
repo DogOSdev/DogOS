@@ -5,7 +5,7 @@ namespace DogOS.Shell.Commands
 {
     public class ClearCommand : Command
     {
-        public ClearCommand() : base("clear", "Clears the screen")
+        public ClearCommand() : base("clear", "Clears the screen", DogOS.Shell.Category.General)
         {
         }
 

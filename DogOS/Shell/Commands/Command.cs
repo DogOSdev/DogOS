@@ -8,10 +8,13 @@ namespace DogOS.Shell.Commands
         public string Name { get; private set; }
         public string Description { get; private set; }
 
-        public Command(string name, string description)
+        public Category Category { get; private set; }
+
+        public Command(string name, string description, Category category)
         {
             Name = name;
             Description = description;
+            Category = category;
         }
 
         public virtual void Execute()

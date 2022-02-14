@@ -5,7 +5,7 @@ namespace DogOS.Shell.Commands
 {
     public class HelpCommand : Command
     {
-        public HelpCommand() : base("help", "Get infomation about a command.")
+        public HelpCommand() : base("help", "Get infomation about a command.", DogOS.Shell.Category.General)
         {
         }
 

@@ -7,7 +7,7 @@ namespace DogOS.Shell.Commands.Filesystem
 {
     public class TouchCommand : Command
     {
-        public TouchCommand() : base("touch", "Create a empty file.") { }
+        public TouchCommand() : base("touch", "Create a empty file.", DogOS.Shell.Category.Filesystem) { }
 
         public override void Execute()
         {
