@@ -21,6 +21,7 @@ namespace DogOS.Shell
             commands.Add(new Commands.Filesystem.DirectoryCommand());
             commands.Add(new Commands.Filesystem.TouchCommand());
             commands.Add(new Commands.Filesystem.ReadCommand());
+            commands.Add(new Commands.Filesystem.ChangeDirectory());
         }
 
         public static string FormatPrefix()
