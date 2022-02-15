@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DogOS.Shell.Commands
+namespace DogOS.Shell.Commands.General
 {
     public class HelpCommand : Command
     {
@@ -50,7 +50,7 @@ namespace DogOS.Shell.Commands
             }
         }
 
-        public override void Execute()
+        public override CommandResult Execute()
         {
             var commands = Organize();
             
@@ -62,9 +62,11 @@ namespace DogOS.Shell.Commands
                     Console.WriteLine($"{command.Name}: {command.Description}");
                 }
             }
+
+            return CommandResult.Success();
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
             var cmd_name = args[0].ToLower();
             for (int i = 0; i < Shell.commands.Count; i++)
@@ -76,6 +78,8 @@ namespace DogOS.Shell.Commands
                     cmd.Help();
                 }
             }
+
+            return CommandResult.Success();
         }
 
         public override void Help()

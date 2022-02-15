@@ -8,14 +8,14 @@ namespace DogOS.Shell.Commands.Filesystem
     {
         public ReadCommand() : base("read", "Read a file.", CommandCategory.Filesystem) { }
 
-        public override void Execute()
+        public override CommandResult Execute()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("ERR: A file has not been given.");
-            Console.ForegroundColor = ConsoleColor.White;
+            return CommandResult.Failure(new Types.Errors.NotEnoughArguments(
+                "A file has not been given."
+            ));
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
             if(File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
@@ -25,19 +25,22 @@ namespace DogOS.Shell.Commands.Filesystem
                     {
                         Console.WriteLine(line);
                     }
+                    
+                    return CommandResult.Success();
                 }
                 catch (Exception e)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"ERR: {e}");
-                    Console.ForegroundColor = ConsoleColor.White;
+                    // TODO: Get the type of error and raise the right error.
+                    return CommandResult.Failure(new Types.Errors.UnknownError(
+                        e.ToString()
+                    ));
                 }
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"ERR: File '{Kernel.drive}{Kernel.dir}{args[0]}' does not exist.");
-                Console.ForegroundColor = ConsoleColor.White;
+                return CommandResult.Failure(new Types.Errors.DoesNotExist(
+                    $"File '{Kernel.drive}{Kernel.dir}{args[0]}'"
+                ));
             }
         }
 

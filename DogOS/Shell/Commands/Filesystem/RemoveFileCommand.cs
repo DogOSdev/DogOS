@@ -8,24 +8,34 @@ namespace DogOS.Shell.Commands.Filesystem
     {
         public RemoveFileCommand() : base("rmfile", "Remove a file", CommandCategory.Filesystem) { }
 
-        public override void Execute()
+        public override CommandResult Execute()
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("ERR: No file was specified.");
-            Console.ForegroundColor = ConsoleColor.White;
+            return CommandResult.Failure(new Types.Errors.NotEnoughArguments(
+                "No file was specified."
+            ));
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
             if(File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
-                File.Delete($"{Kernel.drive}{Kernel.dir}{args[0]}");
+                try
+                {
+                    File.Delete($"{Kernel.drive}{Kernel.dir}{args[0]}");
+                    return CommandResult.Success();
+                }
+                catch(Exception e)
+                {
+                    return CommandResult.Failure(new Types.Errors.UnknownError(
+                        e.ToString()
+                    ));
+                }
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"ERR: File '{Kernel.drive}{Kernel.dir}{args[0]}' does not exist.");
-                Console.ForegroundColor = ConsoleColor.White;
+                return CommandResult.Failure(new Types.Errors.DoesNotExist(
+                    $"File '{Kernel.drive}{Kernel.dir}{args[0]}'."
+                ));
             }
         }
 

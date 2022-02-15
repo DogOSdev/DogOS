@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DogOS.Shell.Commands
+namespace DogOS.Shell.Commands.General
 {
     public class EchoCommand : Command
     {
@@ -10,15 +10,17 @@ namespace DogOS.Shell.Commands
         {
         }
 
-        public override void Execute()
+        public override CommandResult Execute()
         {
             if (Shell.echo_on)
                 Console.WriteLine("Echo is enabled.");
             else
                 Console.WriteLine("Echo is disabled.");
+
+            return CommandResult.Success();
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
             if (args[0] != "-t")
             {
@@ -29,7 +31,7 @@ namespace DogOS.Shell.Commands
                     str.Append($"{arg} ");
                 }
                 Console.WriteLine(str);
-                return;
+                return CommandResult.Success();
             }
 
             var lower = args[1].ToLower();
@@ -44,8 +46,12 @@ namespace DogOS.Shell.Commands
             }
             else
             {
-                Console.WriteLine($"ERR: '{args[1]}' is not a valid option. Valid options are 'ON' or 'OFF'.");
+                return CommandResult.Failure(new Types.Errors.InvalidOption(
+                    $"'{args[1]}' is not a valid option. Valid options are 'ON' or 'OFF'."
+                ));
             }
+
+            return CommandResult.Success();
         }
 
         public override void Help()

@@ -17,14 +17,14 @@ namespace DogOS.Shell.Commands
             Category = category;
         }
 
-        public virtual void Execute()
+        public virtual CommandResult Execute()
         {
-            return;
+            return CommandResult.Success();
         }
 
-        public virtual void Execute(List<string> args)
+        public virtual CommandResult Execute(List<string> args)
         {
-            return;
+            return CommandResult.Success();
         }
 
         public virtual void Help()

@@ -13,6 +13,13 @@ namespace DogOS.Types
             Details = details;
         }
 
+        public void Write()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(ToString());
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         public override string ToString()
         {
             return $"{Name}: {Details}";

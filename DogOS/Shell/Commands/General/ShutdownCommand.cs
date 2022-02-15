@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DogOS.Shell.Commands
+namespace DogOS.Shell.Commands.General
 {
     public class ShutdownCommand : Command
     {
@@ -9,20 +9,21 @@ namespace DogOS.Shell.Commands
         {
         }
 
-        public override void Execute()
+        public override CommandResult Execute()
         {
             Cosmos.System.Power.Shutdown();
+            return CommandResult.Success();
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
             if (args.Contains("-r") || args.Contains("--restart"))
             {
                 Cosmos.System.Power.Reboot();
-                return;
+                return CommandResult.Success();
             }
             // Ignore any commands given.
-            Execute();
+            return Execute();
         }
 
         public override void Help()

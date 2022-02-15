@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DogOS.Shell.Commands
+namespace DogOS.Shell.Commands.General
 {
     public class ClearCommand : Command
     {
@@ -9,15 +9,16 @@ namespace DogOS.Shell.Commands
         {
         }
 
-        public override void Execute()
+        public override CommandResult Execute()
         {
             Console.Clear();
+            return CommandResult.Success();
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
             // Ignore any params given.
-            Execute();
+            return Execute();
         }
 
         public override void Help()

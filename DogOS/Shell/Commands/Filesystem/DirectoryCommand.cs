@@ -11,46 +11,54 @@ namespace DogOS.Shell.Commands.Filesystem
         {
         }
 
-        private void GetDirectoryContents(string curr_dir)
+        private CommandResult GetDirectoryContents(string curr_dir)
         {
-            if (curr_dir != $"{Kernel.drive}\\")
+            if(Directory.Exists(curr_dir))
             {
-                Console.BackgroundColor = ConsoleColor.Green;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("..");
+                if (curr_dir != $"{Kernel.drive}\\")
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("..");
 
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+
+                foreach (var dir in Directory.GetDirectories(curr_dir))
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write(dir);
+
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("/");
+                }
+
+                foreach (var file in Directory.GetFiles(curr_dir))
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(file);
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+                return CommandResult.Success();
             }
-
-            foreach (var dir in Directory.GetDirectories(curr_dir))
-            {
-                Console.BackgroundColor = ConsoleColor.Green;
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.Write(dir);
-
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("/");
-            }
-
-            foreach (var file in Directory.GetFiles(curr_dir))
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(file);
-
-                Console.ForegroundColor = ConsoleColor.White;
-            }
+            
+            return CommandResult.Failure(new Types.Errors.DoesNotExist(
+                $"Directory '{curr_dir}'"
+            ));
         }
 
-        public override void Execute()
+        public override CommandResult Execute()
         {
-            GetDirectoryContents($"{Kernel.drive}{Kernel.dir}");
+            return GetDirectoryContents($"{Kernel.drive}{Kernel.dir}");
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
-            Execute();
+            return Execute();
         }
 
         public override void Help()

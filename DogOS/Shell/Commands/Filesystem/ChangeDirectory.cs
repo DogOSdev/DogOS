@@ -7,14 +7,15 @@ namespace DogOS.Shell.Commands.Filesystem
 {
     public class ChangeDirectory : Command
     {
-        public ChangeDirectory() : base("cd", "Change the active directory.") { }
+        public ChangeDirectory() : base("cd", "Change the active directory.", CommandCategory.Filesystem) { }
 
-        public override void Execute()
+        public override CommandResult Execute()
         {
             Console.WriteLine($"{Kernel.drive}{Kernel.dir}");
+            return CommandResult.Success();
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
             var backslash_dir = args[0].Replace('/', '\\');
             if(backslash_dir == "..")
@@ -33,20 +34,19 @@ namespace DogOS.Shell.Commands.Filesystem
                     }
 
                     Kernel.dir = res;
-                    return;
+                    return CommandResult.Success();
                 }
             }
 
             if(Directory.Exists($"{Kernel.drive}{Kernel.dir}{backslash_dir}\\"))
             {
                 Kernel.dir = $"{Kernel.dir}{backslash_dir}\\";
+                return CommandResult.Success();
             }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Directory '{Kernel.drive}{Kernel.dir}{backslash_dir}\\' does not exist.");
-                Console.ForegroundColor = ConsoleColor.White;
-            }
+
+            return CommandResult.Failure(new Types.Errors.DoesNotExist(
+                $"Directory '{Kernel.drive}{Kernel.dir}{backslash_dir}\\'"
+            ));
         }
 
         public override void Help()

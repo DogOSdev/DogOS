@@ -12,11 +12,11 @@ namespace DogOS.Shell
 
         static Shell()
         {
-            commands.Add(new Commands.EchoCommand());
-            commands.Add(new Commands.SHA256Command());
-            commands.Add(new Commands.ShutdownCommand());
-            commands.Add(new Commands.ClearCommand());
-            commands.Add(new Commands.HelpCommand());
+            commands.Add(new Commands.General.EchoCommand());
+            commands.Add(new Commands.General.SHA256Command());
+            commands.Add(new Commands.General.ShutdownCommand());
+            commands.Add(new Commands.General.ClearCommand());
+            commands.Add(new Commands.General.HelpCommand());
 
             commands.Add(new Commands.Filesystem.DirectoryCommand());
             commands.Add(new Commands.Filesystem.TouchCommand());
@@ -26,7 +26,9 @@ namespace DogOS.Shell
 
         public static string FormatPrefix()
         {
-            return Prefix.Replace("$os_name", Kernel.os_name).Replace("$drive", Kernel.drive).Replace("$path", Kernel.dir);
+            return Prefix.Replace("$os_name", Kernel.os_name)
+                .Replace("$drive", Kernel.drive)
+                .Replace("$path", Kernel.dir);
         }
 
         // https://stackoverflow.com/a/59638742/13617487
@@ -105,7 +107,13 @@ namespace DogOS.Shell
                 {
                     if (args.Count == 0)
                     {
-                        command.Execute();
+                        var cmd_res = command.Execute();
+
+                        if(cmd_res.IsError())
+                        {
+                            cmd_res.Error.Write();
+                        }
+                        
                         return;
                     }
                     else
@@ -117,15 +125,18 @@ namespace DogOS.Shell
                         }
                         else
                         {
-                            command.Execute(args);
+                            var cmd_res = command.Execute(args);
+
+                            if(cmd_res.IsError())
+                            {
+                                cmd_res.Error.Write();
+                            }
                             return;
                         }
                     }
                 }
             }
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"ERR: Command '{name}' does not exist.");
-            Console.ForegroundColor = ConsoleColor.White;
+            new Types.Errors.DoesNotExist($"Command '{name}'").Write();
         }
     }
 }
