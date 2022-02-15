@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace DogOS.Shell.Commands.Filesystem
 {
-    public class ReadCommand : Command
+    class RemoveFileCommand : Command
     {
-        public ReadCommand() : base("read", "Read a file.", CommandCategory.Filesystem) { }
+        public RemoveFileCommand() : base("rmfile", "Remove a file", CommandCategory.Filesystem) { }
 
         public override void Execute()
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("ERR: A file has not been given.");
+            Console.WriteLine("ERR: No file was specified.");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -19,19 +19,7 @@ namespace DogOS.Shell.Commands.Filesystem
         {
             if(File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
-                try
-                {
-                    foreach (var line in File.ReadAllLines($"{Kernel.drive}{Kernel.dir}{args[0]}"))
-                    {
-                        Console.WriteLine(line);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"ERR: {e}");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
+                File.Delete($"{Kernel.drive}{Kernel.dir}{args[0]}");
             }
             else
             {
@@ -45,7 +33,7 @@ namespace DogOS.Shell.Commands.Filesystem
         {
             Console.WriteLine(Description);
 
-            Console.WriteLine($"\tread [file] || {Description}");
+            Console.WriteLine($"rmfile [file] || {Description}");
         }
     }
 }

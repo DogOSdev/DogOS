@@ -5,15 +5,36 @@ namespace DogOS.Shell.Commands
 {
     public class HelpCommand : Command
     {
-        public HelpCommand() : base("help", "Get infomation about a command.")
+        public HelpCommand() : base("help", "Get infomation about a command.", CommandCategory.General)
         {
+        }
+
+        public Dictionary<CommandCategory, List<Command>> Organize()
+        {
+            var dict = new Dictionary<CommandCategory, List<Command>>();
+            dict[CommandCategory.General] = new List<Command>();
+            dict[CommandCategory.Filesystem] = new List<Command>();
+
+            foreach(var command in Shell.commands)
+            {
+                dict[command.Category].Add(command);
+            }
+
+            return dict;
         }
 
         public override void Execute()
         {
-            for (int i = 0; i < Shell.commands.Count; i++)
+            var dict = Organize();
+            
+            foreach(var key in dict.Keys)
             {
-                Console.WriteLine($"{Shell.commands[i].Name} : {Shell.commands[i].Description}");
+                Console.WriteLine($"=== {key} ===\n");
+                foreach(var command in dict[key])
+                {
+                    Console.WriteLine($"{command.Name} : {command.Description}");
+                }
+                Console.WriteLine();
             }
         }
 

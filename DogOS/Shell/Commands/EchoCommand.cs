@@ -6,7 +6,7 @@ namespace DogOS.Shell.Commands
 {
     public class EchoCommand : Command
     {
-        public EchoCommand() : base("echo", "Echo a message, or toggle echo.")
+        public EchoCommand() : base("echo", "Echo a message, or toggle echo.", CommandCategory.General)
         {
         }
 
