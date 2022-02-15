@@ -9,32 +9,58 @@ namespace DogOS.Shell.Commands
         {
         }
 
-        public Dictionary<CommandCategory, List<Command>> Organize()
+        public List<List<Command>> Organize()
         {
-            var dict = new Dictionary<CommandCategory, List<Command>>();
-            dict[CommandCategory.General] = new List<Command>();
-            dict[CommandCategory.Filesystem] = new List<Command>();
+            var final_list = new List<List<Command>>();
+            var general_list = new List<Command>();
+            var filesystem_list = new List<Command>();
 
             foreach(var command in Shell.commands)
             {
-                dict[command.Category].Add(command);
+                switch (command.Category)
+                {
+                    case CommandCategory.General:
+                        general_list.Add(command);
+                        break;
+                    case CommandCategory.Filesystem:
+                        filesystem_list.Add(command);
+                        break;
+                }
             }
 
-            return dict;
+            final_list.Add(general_list);
+            final_list.Add(filesystem_list);
+
+            return final_list;
+        }
+
+        public string CategoryToString(CommandCategory category)
+        {
+            switch(category)
+            {
+                case CommandCategory.General:
+                    return "General";
+                    break;
+                case CommandCategory.Filesystem:
+                    return "General";
+                    break;
+                default:
+                    return "Unknown";
+                    break;
+            }
         }
 
         public override void Execute()
         {
-            var dict = Organize();
+            var commands = Organize();
             
-            foreach(var key in dict.Keys)
+            foreach(var list in commands)
             {
-                Console.WriteLine($"=== {key} ===\n");
-                foreach(var command in dict[key])
+                Console.WriteLine($"==={CategoryToString(list[0].Category)}===");
+                foreach(var command in list)
                 {
-                    Console.WriteLine($"{command.Name} : {command.Description}");
+                    Console.WriteLine($"{command.Name}: {command.Description}");
                 }
-                Console.WriteLine();
             }
         }
 
