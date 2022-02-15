@@ -1,6 +1,6 @@
 using System;
 
-namespace DogOS.Shell.Commands
+namespace DogOS.Shell
 {
     public enum CommandResultCode
     {
