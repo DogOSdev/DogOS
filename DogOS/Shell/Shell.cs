@@ -19,10 +19,12 @@ namespace DogOS.Shell
             commands.Add(new Commands.General.HelpCommand());
 
             commands.Add(new Commands.Filesystem.DirectoryCommand());
-            commands.Add(new Commands.Filesystem.TouchCommand());
+            commands.Add(new Commands.Filesystem.MakeFileCommand());
             commands.Add(new Commands.Filesystem.ReadCommand());
             commands.Add(new Commands.Filesystem.ChangeDirectory());
             commands.Add(new Commands.Filesystem.RemoveFileCommand());
+            commands.Add(new Commands.Filesystem.MakeDirectoryCommand());
+            commands.Add(new Commands.Filesystem.RemoveDirectoryCommand());
         }
 
         public static string FormatPrefix()
