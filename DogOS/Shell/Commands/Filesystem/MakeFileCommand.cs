@@ -5,9 +5,9 @@ using System.Text;
 
 namespace DogOS.Shell.Commands.Filesystem
 {
-    public class TouchCommand : Command
+    public class MakeFileCommand : Command
     {
-        public TouchCommand() : base("touch", "Create a empty file.", CommandCategory.Filesystem) { }
+        public MakeFileCommand() : base("mkfile", "Create a empty file.", CommandCategory.Filesystem) { }
 
         public override CommandResult Execute()
         {
