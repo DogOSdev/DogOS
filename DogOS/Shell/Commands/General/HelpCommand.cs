@@ -42,7 +42,7 @@ namespace DogOS.Shell.Commands.General
                     return "General";
                     break;
                 case CommandCategory.Filesystem:
-                    return "General";
+                    return "File System";
                     break;
                 default:
                     return "Unknown";
@@ -56,11 +56,12 @@ namespace DogOS.Shell.Commands.General
             
             foreach(var list in commands)
             {
-                Console.WriteLine($"==={CategoryToString(list[0].Category)}===");
+                Console.WriteLine($"=== {CategoryToString(list[0].Category)} ===");
                 foreach(var command in list)
                 {
                     Console.WriteLine($"{command.Name}: {command.Description}");
                 }
+                Console.WriteLine();
             }
 
             return CommandResult.Success();
