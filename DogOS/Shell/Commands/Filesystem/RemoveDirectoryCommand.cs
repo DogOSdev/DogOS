@@ -4,9 +4,11 @@ using System.IO;
 
 namespace DogOS.Shell.Commands.Filesystem
 {
-    class RemoveDirectoryCommand : Command
+    internal class RemoveDirectoryCommand : Command
     {
-        public RemoveDirectoryCommand() : base("rmdir", "Remove a directory", CommandCategory.Filesystem) { }
+        public RemoveDirectoryCommand() : base("rmdir", "Remove a directory", CommandCategory.Filesystem)
+        {
+        }
 
         public override CommandResult Execute()
         {
@@ -17,14 +19,14 @@ namespace DogOS.Shell.Commands.Filesystem
 
         public override CommandResult Execute(List<string> args)
         {
-            if(Directory.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
+            if (Directory.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
                 try
                 {
                     Directory.Delete($"{Kernel.drive}{Kernel.dir}{args[0]}");
                     return CommandResult.Success();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     return CommandResult.Failure(new Types.Errors.UnknownError(
                         e.ToString()

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Sys = Cosmos.System;
 
 namespace DogOS
@@ -44,7 +43,7 @@ namespace DogOS
             Console.WriteLine("Loading users...");
             users.LoadUsers("0:\\users.ini");
 
-            if(users.users.Count == 0)
+            if (users.users.Count == 0)
             {
                 Console.WriteLine("No users were loaded...");
                 Console.WriteLine("Press any key to continue...");
@@ -62,17 +61,17 @@ namespace DogOS
             {
                 ConsoleKeyInfo choice;
 
-                while(true)
+                while (true)
                 {
                     Console.Clear();
                     Console.WriteLine("Would you like to sign in? (y/n)");
                     choice = Console.ReadKey(true);
 
-                    if(choice.Key == ConsoleKey.Y || choice.Key == ConsoleKey.N)
+                    if (choice.Key == ConsoleKey.Y || choice.Key == ConsoleKey.N)
                         break;
                 }
 
-                if(choice.Key == ConsoleKey.N)
+                if (choice.Key == ConsoleKey.N)
                 {
                     curr_user = new Users.User("Guest", Users.Roles.Guest);
                 }
@@ -97,7 +96,6 @@ namespace DogOS
                             Console.WriteLine($"Username {username} does not exist!");
                             continue;
                         }
-
 
                         while (true)
                         {

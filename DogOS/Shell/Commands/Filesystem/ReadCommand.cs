@@ -6,7 +6,9 @@ namespace DogOS.Shell.Commands.Filesystem
 {
     public class ReadCommand : Command
     {
-        public ReadCommand() : base("read", "Read a file.", CommandCategory.Filesystem) { }
+        public ReadCommand() : base("read", "Read a file.", CommandCategory.Filesystem)
+        {
+        }
 
         public override CommandResult Execute()
         {
@@ -17,7 +19,7 @@ namespace DogOS.Shell.Commands.Filesystem
 
         public override CommandResult Execute(List<string> args)
         {
-            if(File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
+            if (File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
                 try
                 {
@@ -25,7 +27,7 @@ namespace DogOS.Shell.Commands.Filesystem
                     {
                         Console.WriteLine(line);
                     }
-                    
+
                     return CommandResult.Success();
                 }
                 catch (Exception e)

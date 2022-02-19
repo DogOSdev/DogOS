@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
 
 namespace DogOS.Users
 {
@@ -19,14 +17,14 @@ namespace DogOS.Users
             var user_sections = user_sections_str.Split("|");
 
             // Loop through every user
-            foreach(var user_key in user_sections)
+            foreach (var user_key in user_sections)
             {
                 var username = Utils.FileTypes.Ini.ReadFile(user_key.ToUpper(), "USERNAME", user_ini);
                 var password = Utils.FileTypes.Ini.ReadFile(user_key.ToUpper(), "PASSWORD", user_ini);
                 var role = Utils.FileTypes.Ini.ReadFile(user_key.ToUpper(), "ROLE", user_ini);
 
                 int role_int;
-                if(int.TryParse(role, out role_int))
+                if (int.TryParse(role, out role_int))
                 {
                     if (password == "")
                     {

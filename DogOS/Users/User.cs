@@ -1,6 +1,3 @@
-using System;
-using System.Text;
-
 namespace DogOS.Users
 {
     public class User
@@ -8,7 +5,7 @@ namespace DogOS.Users
         private string username;
         private string password;
         private Roles role;
-        
+
         public User(string username, Roles role)
         {
             this.username = username;

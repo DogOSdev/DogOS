@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 
 namespace DogOS.Shell.Commands.Filesystem
 {
     public class ChangeDirectory : Command
     {
-        public ChangeDirectory() : base("cd", "Change the active directory.", CommandCategory.Filesystem) { }
+        public ChangeDirectory() : base("cd", "Change the active directory.", CommandCategory.Filesystem)
+        {
+        }
 
         public override CommandResult Execute()
         {
@@ -18,9 +19,9 @@ namespace DogOS.Shell.Commands.Filesystem
         public override CommandResult Execute(List<string> args)
         {
             var backslash_dir = args[0].Replace('/', '\\');
-            if(backslash_dir == "..")
+            if (backslash_dir == "..")
             {
-                if($"{Kernel.drive}{Kernel.dir}" != $"{Kernel.drive}\\")
+                if ($"{Kernel.drive}{Kernel.dir}" != $"{Kernel.drive}\\")
                 {
                     string res = @"\";
                     string[] split_dir = Kernel.dir.Split(@"\", StringSplitOptions.RemoveEmptyEntries);
@@ -38,7 +39,7 @@ namespace DogOS.Shell.Commands.Filesystem
                 }
             }
 
-            if(Directory.Exists($"{Kernel.drive}{Kernel.dir}{backslash_dir}\\"))
+            if (Directory.Exists($"{Kernel.drive}{Kernel.dir}{backslash_dir}\\"))
             {
                 Kernel.dir = $"{Kernel.dir}{backslash_dir}\\";
                 return CommandResult.Success();

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace DogOS.Shell.Commands.Filesystem
 {
@@ -13,7 +12,7 @@ namespace DogOS.Shell.Commands.Filesystem
 
         private CommandResult GetDirectoryContents(string curr_dir)
         {
-            if(Directory.Exists(curr_dir))
+            if (Directory.Exists(curr_dir))
             {
                 if (curr_dir != $"{Kernel.drive}\\")
                 {
@@ -45,7 +44,7 @@ namespace DogOS.Shell.Commands.Filesystem
                 }
                 return CommandResult.Success();
             }
-            
+
             return CommandResult.Failure(new Types.Errors.DoesNotExist(
                 $"Directory '{curr_dir}'"
             ));

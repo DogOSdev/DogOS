@@ -15,13 +15,14 @@ namespace DogOS.Shell.Commands.General
             var general_list = new List<Command>();
             var filesystem_list = new List<Command>();
 
-            foreach(var command in Shell.commands)
+            foreach (var command in Shell.commands)
             {
                 switch (command.Category)
                 {
                     case CommandCategory.General:
                         general_list.Add(command);
                         break;
+
                     case CommandCategory.Filesystem:
                         filesystem_list.Add(command);
                         break;
@@ -36,14 +37,16 @@ namespace DogOS.Shell.Commands.General
 
         public string CategoryToString(CommandCategory category)
         {
-            switch(category)
+            switch (category)
             {
                 case CommandCategory.General:
                     return "General";
                     break;
+
                 case CommandCategory.Filesystem:
                     return "File System";
                     break;
+
                 default:
                     return "Unknown";
                     break;
@@ -53,11 +56,11 @@ namespace DogOS.Shell.Commands.General
         public override CommandResult Execute()
         {
             var commands = Organize();
-            
-            foreach(var list in commands)
+
+            foreach (var list in commands)
             {
                 Console.WriteLine($"=== {CategoryToString(list[0].Category)} ===");
-                foreach(var command in list)
+                foreach (var command in list)
                 {
                     Console.WriteLine($"{command.Name}: {command.Description}");
                 }

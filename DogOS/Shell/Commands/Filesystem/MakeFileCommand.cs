@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace DogOS.Shell.Commands.Filesystem
 {
     public class MakeFileCommand : Command
     {
-        public MakeFileCommand() : base("mkfile", "Create a empty file.", CommandCategory.Filesystem) { }
+        public MakeFileCommand() : base("mkfile", "Create a empty file.", CommandCategory.Filesystem)
+        {
+        }
 
         public override CommandResult Execute()
         {
@@ -16,10 +17,9 @@ namespace DogOS.Shell.Commands.Filesystem
             ));
         }
 
-
         public override CommandResult Execute(List<string> args)
         {
-            if(File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
+            if (File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
                 return CommandResult.Failure(new Types.Errors.AlreadyExists(
                     $"File {args[0]}"

@@ -86,7 +86,7 @@ namespace DogOS.Shell
 
             var input = Console.ReadLine();
 
-            if(input.Length <= 0 || string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
+            if (input.Length <= 0 || string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
             {
                 Console.WriteLine();
                 return;
@@ -112,11 +112,11 @@ namespace DogOS.Shell
                     {
                         var cmd_res = command.Execute();
 
-                        if(cmd_res.IsError())
+                        if (cmd_res.IsError())
                         {
                             cmd_res.Error.Write();
                         }
-                        
+
                         return;
                     }
                     else
@@ -130,7 +130,7 @@ namespace DogOS.Shell
                         {
                             var cmd_res = command.Execute(args);
 
-                            if(cmd_res.IsError())
+                            if (cmd_res.IsError())
                             {
                                 cmd_res.Error.Write();
                             }
