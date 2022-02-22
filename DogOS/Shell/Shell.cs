@@ -25,6 +25,8 @@ namespace DogOS.Shell
             commands.Add(new Commands.Filesystem.RemoveFileCommand());
             commands.Add(new Commands.Filesystem.MakeDirectoryCommand());
             commands.Add(new Commands.Filesystem.RemoveDirectoryCommand());
+
+            commands.Add(new Commands.Apps.EditCommand());
         }
 
         public static string FormatPrefix()
@@ -94,6 +96,7 @@ namespace DogOS.Shell
 
             ExecuteCommand(input);
             if (echo_on) Console.Write("\n");
+            Cosmos.Core.Memory.Heap.Collect();
         }
 
         public static void ExecuteCommand(string input)

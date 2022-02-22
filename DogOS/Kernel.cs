@@ -140,6 +140,9 @@ namespace DogOS
                 }
             }
 
+            Console.WriteLine("Collecting garbage.");
+            Cosmos.Core.Memory.Heap.Collect();
+
             Console.Clear();
             Console.Beep(880, 100);
             Console.WriteLine($"{os_name} {codename} ({build_type}) v{version}");
