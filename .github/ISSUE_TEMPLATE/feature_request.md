@@ -2,7 +2,7 @@
 name: Feature request
 about: Have a idea to make DogOS better? Suggest it, or make a pull request!
 title: "[FEATURE]"
-labels: enhancement
+labels: Suggestion
 assignees: TaromaruYuki
 
 ---
