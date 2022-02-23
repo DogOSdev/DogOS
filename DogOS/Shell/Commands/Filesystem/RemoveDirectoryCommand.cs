@@ -1,38 +1,33 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace DogOS.Shell.Commands.Filesystem
 {
-    public class ReadCommand : Command
+    internal class RemoveDirectoryCommand : Command
     {
-        public ReadCommand() : base("read", "Read a file.", CommandCategory.Filesystem)
+        public RemoveDirectoryCommand() : base("rmdir", "Remove a directory", CommandCategory.Filesystem)
         {
         }
 
         public override CommandResult Execute()
         {
             return CommandResult.Failure(new Types.Errors.NotEnoughArguments(
-                "A file has not been given."
+                "No directory was specified."
             ));
         }
 
         public override CommandResult Execute(List<string> args)
         {
-            if (File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
+            if (Directory.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
                 try
                 {
-                    foreach (var line in File.ReadAllLines($"{Kernel.drive}{Kernel.dir}{args[0]}"))
-                    {
-                        Console.WriteLine(line);
-                    }
-
+                    Directory.Delete($"{Kernel.drive}{Kernel.dir}{args[0]}");
                     return CommandResult.Success();
                 }
                 catch (Exception e)
                 {
-                    // TODO: Get the type of error and raise the right error.
                     return CommandResult.Failure(new Types.Errors.UnknownError(
                         e.ToString()
                     ));
@@ -41,7 +36,7 @@ namespace DogOS.Shell.Commands.Filesystem
             else
             {
                 return CommandResult.Failure(new Types.Errors.DoesNotExist(
-                    $"File '{Kernel.drive}{Kernel.dir}{args[0]}'"
+                    $"Directory '{Kernel.drive}{Kernel.dir}{args[0]}'."
                 ));
             }
         }
@@ -50,7 +45,7 @@ namespace DogOS.Shell.Commands.Filesystem
         {
             Console.WriteLine(Description);
 
-            Console.WriteLine($"\tread [file] || {Description}");
+            Console.WriteLine($"rmdir [directory] || {Description}");
         }
     }
 }

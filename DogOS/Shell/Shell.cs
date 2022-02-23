@@ -12,20 +12,28 @@ namespace DogOS.Shell
 
         static Shell()
         {
-            commands.Add(new Commands.EchoCommand());
-            commands.Add(new Commands.SHA256Command());
-            commands.Add(new Commands.ShutdownCommand());
-            commands.Add(new Commands.ClearCommand());
-            commands.Add(new Commands.HelpCommand());
+            commands.Add(new Commands.General.EchoCommand());
+            commands.Add(new Commands.General.SHA256Command());
+            commands.Add(new Commands.General.ShutdownCommand());
+            commands.Add(new Commands.General.ClearCommand());
+            commands.Add(new Commands.General.HelpCommand());
 
             commands.Add(new Commands.Filesystem.DirectoryCommand());
-            commands.Add(new Commands.Filesystem.TouchCommand());
+            commands.Add(new Commands.Filesystem.MakeFileCommand());
             commands.Add(new Commands.Filesystem.ReadCommand());
+            commands.Add(new Commands.Filesystem.ChangeDirectory());
+            commands.Add(new Commands.Filesystem.RemoveFileCommand());
+            commands.Add(new Commands.Filesystem.MakeDirectoryCommand());
+            commands.Add(new Commands.Filesystem.RemoveDirectoryCommand());
+
+            commands.Add(new Commands.Apps.EditCommand());
         }
 
         public static string FormatPrefix()
         {
-            return Prefix.Replace("$os_name", Kernel.os_name).Replace("$drive", Kernel.drive).Replace("$path", Kernel.dir);
+            return Prefix.Replace("$os_name", Kernel.os_name)
+                .Replace("$drive", Kernel.drive)
+                .Replace("$path", Kernel.dir);
         }
 
         // https://stackoverflow.com/a/59638742/13617487
@@ -80,7 +88,7 @@ namespace DogOS.Shell
 
             var input = Console.ReadLine();
 
-            if(input.Length <= 0 || string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
+            if (input.Length <= 0 || string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
             {
                 Console.WriteLine();
                 return;
@@ -88,6 +96,7 @@ namespace DogOS.Shell
 
             ExecuteCommand(input);
             if (echo_on) Console.Write("\n");
+            Cosmos.Core.Memory.Heap.Collect();
         }
 
         public static void ExecuteCommand(string input)
@@ -104,7 +113,13 @@ namespace DogOS.Shell
                 {
                     if (args.Count == 0)
                     {
-                        command.Execute();
+                        var cmd_res = command.Execute();
+
+                        if (cmd_res.IsError())
+                        {
+                            cmd_res.Error.Write();
+                        }
+
                         return;
                     }
                     else
@@ -116,15 +131,18 @@ namespace DogOS.Shell
                         }
                         else
                         {
-                            command.Execute(args);
+                            var cmd_res = command.Execute(args);
+
+                            if (cmd_res.IsError())
+                            {
+                                cmd_res.Error.Write();
+                            }
                             return;
                         }
                     }
                 }
             }
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"ERR: Command '{name}' does not exist.");
-            Console.ForegroundColor = ConsoleColor.White;
+            new Types.Errors.DoesNotExist($"Command '{name}'").Write();
         }
     }
 }

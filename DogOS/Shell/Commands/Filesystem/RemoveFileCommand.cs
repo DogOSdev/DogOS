@@ -4,28 +4,40 @@ using System.IO;
 
 namespace DogOS.Shell.Commands.Filesystem
 {
-    class RemoveFileCommand : Command
+    internal class RemoveFileCommand : Command
     {
-        public RemoveFileCommand() : base("rmfile", "Remove a file", CommandCategory.Filesystem) { }
-
-        public override void Execute()
+        public RemoveFileCommand() : base("rmfile", "Remove a file", CommandCategory.Filesystem)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("ERR: No file was specified.");
-            Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute()
         {
-            if(File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
+            return CommandResult.Failure(new Types.Errors.NotEnoughArguments(
+                "No file was specified."
+            ));
+        }
+
+        public override CommandResult Execute(List<string> args)
+        {
+            if (File.Exists($"{Kernel.drive}{Kernel.dir}{args[0]}"))
             {
-                File.Delete($"{Kernel.drive}{Kernel.dir}{args[0]}");
+                try
+                {
+                    File.Delete($"{Kernel.drive}{Kernel.dir}{args[0]}");
+                    return CommandResult.Success();
+                }
+                catch (Exception e)
+                {
+                    return CommandResult.Failure(new Types.Errors.UnknownError(
+                        e.ToString()
+                    ));
+                }
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"ERR: File '{Kernel.drive}{Kernel.dir}{args[0]}' does not exist.");
-                Console.ForegroundColor = ConsoleColor.White;
+                return CommandResult.Failure(new Types.Errors.DoesNotExist(
+                    $"File '{Kernel.drive}{Kernel.dir}{args[0]}'."
+                ));
             }
         }
 

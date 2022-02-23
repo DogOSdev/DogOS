@@ -1,5 +1,3 @@
-using System;
-
 namespace DogOS.Shell
 {
     public enum CommandCategory

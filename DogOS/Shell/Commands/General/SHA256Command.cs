@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DogOS.Shell.Commands
+namespace DogOS.Shell.Commands.General
 {
     public class SHA256Command : Command
     {
@@ -10,9 +10,11 @@ namespace DogOS.Shell.Commands
         {
         }
 
-        public override void Execute(List<string> args)
+        public override CommandResult Execute(List<string> args)
         {
-            if (args.Count <= 0) return;
+            if (args.Count <= 0) return CommandResult.Failure(new Types.Errors.NotEnoughArguments(
+                "Not enough arguments given. Please specify a string."
+            ));
 
             var str = new StringBuilder();
 
@@ -26,6 +28,8 @@ namespace DogOS.Shell.Commands
             string hash = Utils.Security.Sha256.hash(str.ToString());
 
             Console.WriteLine(hash);
+
+            return CommandResult.Success();
         }
 
         public override void Help()
