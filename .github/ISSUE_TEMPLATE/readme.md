@@ -2,7 +2,7 @@
 name: Readme
 about: Read me needs updated or something added? Use this template.
 title: "[README]"
-labels: documentation
+labels: Documentation
 assignees: ''
 
 ---
