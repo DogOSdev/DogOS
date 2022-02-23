@@ -37,7 +37,11 @@ namespace DogOS.Shell.Commands.Filesystem
 
                 foreach (var file in Directory.GetFiles(curr_dir))
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    if(file.EndsWith(".dog"))
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                    else
+                        Console.ForegroundColor = ConsoleColor.Green;
+
                     Console.WriteLine(file);
 
                     Console.ForegroundColor = ConsoleColor.White;

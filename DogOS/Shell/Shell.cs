@@ -17,6 +17,7 @@ namespace DogOS.Shell
             commands.Add(new Commands.General.ShutdownCommand());
             commands.Add(new Commands.General.ClearCommand());
             commands.Add(new Commands.General.HelpCommand());
+            commands.Add(new Commands.General.ExecCommand());
 
             commands.Add(new Commands.Filesystem.DirectoryCommand());
             commands.Add(new Commands.Filesystem.MakeFileCommand());
@@ -99,7 +100,7 @@ namespace DogOS.Shell
             Cosmos.Core.Memory.Heap.Collect();
         }
 
-        public static void ExecuteCommand(string input)
+        public static CommandResult ExecuteCommand(string input)
         {
             List<string> args = ParseInput(input);
             string name = args[0].ToLower();
@@ -120,14 +121,14 @@ namespace DogOS.Shell
                             cmd_res.Error.Write();
                         }
 
-                        return;
+                        return cmd_res;
                     }
                     else
                     {
                         if (args[0] == "-h" || args[0] == "--help")
                         {
                             command.Help();
-                            return;
+                            return CommandResult.Success();
                         }
                         else
                         {
@@ -137,12 +138,16 @@ namespace DogOS.Shell
                             {
                                 cmd_res.Error.Write();
                             }
-                            return;
+                            return cmd_res;
                         }
                     }
                 }
             }
-            new Types.Errors.DoesNotExist($"Command '{name}'").Write();
+
+            var cmd_res_ = CommandResult.Failure(new Types.Errors.DoesNotExist($"Command '{name}'"));
+            cmd_res_.Error.Write();
+
+            return cmd_res_;
         }
     }
 }

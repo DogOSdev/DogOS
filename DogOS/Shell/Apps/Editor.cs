@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace DogOS.Shell.Apps
 {
@@ -53,9 +54,24 @@ namespace DogOS.Shell.Apps
             }
         }
 
+        private string JoinLines()
+        {
+            var builder = new StringBuilder();
+
+            for (var i = 0; i < lines.Count; ++i)
+            {
+                builder.Append(lines[i]);
+                if(i < lines.Count - 1)
+                    builder.Append("\n");
+            }
+
+            return builder.ToString();
+        }
+
         private void Write()
         {
-            File.WriteAllLines($"{Kernel.drive}{Kernel.dir}{file}", lines);
+            //Console.WriteLine($"Saving to '{Kernel.drive}{Kernel.dir}{file}'");
+            File.WriteAllText($"{Kernel.drive}{Kernel.dir}{file}", JoinLines());
         }
 
         private void PrintLines()
@@ -68,7 +84,7 @@ namespace DogOS.Shell.Apps
 
         private void AddLine()
         {
-            Console.WriteLine("Line text > ");
+            Console.Write("Line text > ");
             lines.Add(Console.ReadLine());
         }
 
@@ -78,7 +94,7 @@ namespace DogOS.Shell.Apps
 
             while(true)
             {
-                Console.WriteLine("Line? ");
+                Console.Write("Line? ");
                 string line_num_str = Console.ReadLine();
 
                 if(int.TryParse(line_num_str, out line_num))
@@ -87,9 +103,9 @@ namespace DogOS.Shell.Apps
                 }
             }
             
-            Console.WriteLine("Line Text > ");
+            Console.Write("Line Text > ");
             string line = Console.ReadLine();
-            lines[line_num] = line;
+            lines[line_num - 1] = line;
         }
 
         private void DeleteLine()
@@ -98,7 +114,7 @@ namespace DogOS.Shell.Apps
 
             while (true)
             {
-                Console.WriteLine("Line? ");
+                Console.Write("Line? ");
                 string line_num_str = Console.ReadLine();
 
                 if (int.TryParse(line_num_str, out line_num))
@@ -107,7 +123,7 @@ namespace DogOS.Shell.Apps
                 }
             }
 
-            lines.RemoveAt(line_num);
+            lines.RemoveAt(line_num - 1);
         }
 
         private void Help()

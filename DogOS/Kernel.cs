@@ -25,6 +25,9 @@ namespace DogOS
 
         protected override void BeforeRun()
         {
+            Console.WriteLine("Loading font.");
+            Sys.Graphics.VGAScreen.SetFont(Fonts.AVGA2, 16);
+
             Console.WriteLine("Registering Filesystem...");
             Sys.FileSystem.VFS.VFSManager.RegisterVFS(fs);
 
