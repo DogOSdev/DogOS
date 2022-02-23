@@ -2,7 +2,7 @@
 name: Bug report
 about: Something wrong? Create a report to help DogOS improve.
 title: "[BUG]"
-labels: bug
+labels: Bug
 assignees: ''
 
 ---
