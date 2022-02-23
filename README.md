@@ -62,6 +62,6 @@ To run a release, please follow these steps.
 
 ## Additional Info
 
-DogOS has only been tested on VMware Workstation 16. If you test it on a different virtual machine, please [open a blank issue](https://github.com/DogOSdev/DogOS/issues/new). Use this prefix on the title: `[README]`. This helps me make sure that DogOS works on other platforms.
+DogOS has only been tested on VMware Workstation 16. If you test it on a different virtual machine, please [open a issue](https://github.com/DogOSdev/DogOS/issues/new). Use this prefix on the title: `[README]`. This helps me make sure that DogOS works on other platforms.
 
 Thank you for checking out DogOS.
