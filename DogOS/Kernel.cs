@@ -28,6 +28,7 @@ namespace DogOS
 
         public static System.Drawing.Color background = System.Drawing.Color.Blue;
         public static GUI.Desktop desktop;
+        public static System.Drawing.Color mc = System.Drawing.Color.White;
 
         #endregion
 

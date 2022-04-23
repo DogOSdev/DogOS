@@ -29,7 +29,7 @@ namespace DogOS.GUI
         public void Draw()
         {
             base.Draw(canvas);
-            Pen pen = new Pen(Color.White);
+            Pen pen = new Pen(Kernel.mc);
 
             for (int i = 0; i < 4; i++)
             {

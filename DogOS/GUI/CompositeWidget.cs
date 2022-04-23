@@ -37,6 +37,8 @@ namespace DogOS.GUI
 
         public new void OnMouseDown(int x, int y, MouseState button)
         {
+            base.OnMouseDown(x, y, button);
+
             foreach (var child in children)
             {
                 if(child.ContainsCoordinate(x - this.x, y - this.y))

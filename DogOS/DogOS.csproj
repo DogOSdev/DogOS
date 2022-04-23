@@ -73,6 +73,27 @@
 		<HyperV_ExtractMapFile>False</HyperV_ExtractMapFile>
 		<Bochs_VMwareEdition>Workstation</Bochs_VMwareEdition>
 		<EnableBochsDebug>False</EnableBochsDebug>
+		<Bochs_EnableBochsDebug>False</Bochs_EnableBochsDebug>
+		<USB_StackCorruptionDetectionEnabled>True</USB_StackCorruptionDetectionEnabled>
+		<USB_StackCorruptionDetectionLevel>AllInstructions</USB_StackCorruptionDetectionLevel>
+		<USB_Name>Bochs User 001</USB_Name>
+		<USB_Description>Makes a USB device such as a flash drive or external hard disk bootable.</USB_Description>
+		<USB_Deployment>USB</USB_Deployment>
+		<USB_Launch>None</USB_Launch>
+		<USB_DebugEnabled>False</USB_DebugEnabled>
+		<USB_DebugMode>Source</USB_DebugMode>
+		<USB_IgnoreDebugStubAttribute>False</USB_IgnoreDebugStubAttribute>
+		<USB_CosmosDebugPort>Serial: COM1</USB_CosmosDebugPort>
+		<USB_VisualStudioDebugPort>Pipe: Cosmos\Serial</USB_VisualStudioDebugPort>
+		<USB_PxeInterface>192.168.0.8</USB_PxeInterface>
+		<USB_VMwareEdition>Workstation</USB_VMwareEdition>
+		<USB_EnableGDB>False</USB_EnableGDB>
+		<USB_StartCosmosGDB>False</USB_StartCosmosGDB>
+		<USB_EnableBochsDebug>False</USB_EnableBochsDebug>
+		<USB_ISOFile>bin\Debug\net5.0\DogOS.iso</USB_ISOFile>
+		<USB_CompileVBEMultiboot>False</USB_CompileVBEMultiboot>
+		<USB_ExtractMapFile>False</USB_ExtractMapFile>
+		<VMware_EnableBochsDebug>False</VMware_EnableBochsDebug>
     </PropertyGroup>
 
     <PropertyGroup>

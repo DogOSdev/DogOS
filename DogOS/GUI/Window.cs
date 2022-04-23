@@ -12,14 +12,12 @@ namespace DogOS.GUI
         public new void OnMouseDown(int x, int y, MouseState button)
         {
             base.OnMouseDown(x, y, button);
-
             dragging = button == MouseState.Left;
         }
 
         public new void OnMouseUp(int x, int y, MouseState button)
         {
             base.OnMouseUp(x, y, button);
-
             dragging = false;
         }
 
