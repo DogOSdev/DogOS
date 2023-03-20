@@ -1,7 +1,7 @@
 ﻿namespace DogOS
 {
     ////////////////////////////////////////////////////////////
-    // Please email "taromaruyuki@gmail.com" for legal issues //
+    //           Please message for legal issues              //
     ////////////////////////////////////////////////////////////
     
     public static class Fonts
